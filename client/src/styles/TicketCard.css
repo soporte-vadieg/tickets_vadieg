@@ -1,0 +1,56 @@
+
+.ticket-card {
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 15px 0;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-in-out;
+}
+
+.ticket-card:hover {
+    transform: translateY(-5px);
+}
+
+.ticket-card h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.ticket-card p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+.ticket-card span {
+    display: inline-block;
+    margin-right: 10px;
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.ticket-card .status {
+    font-weight: bold;
+    color: #4caf50;
+}
+
+.ticket-card .urgency {
+    font-weight: bold;
+    color: #f44336;
+}
+.file-options {
+    margin-top: 10px;
+}
+
+.file-options a {
+    color: #007bff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.file-options a:hover {
+    text-decoration: underline;
+}
