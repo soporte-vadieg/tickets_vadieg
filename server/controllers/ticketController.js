@@ -15,7 +15,8 @@ const getTickets = async (req, res) => {
                 areas.name AS area_nombre, 
                 categoria.name AS categoria_nombre, 
                 IFNULL(users_assigned.full_name, 'No asignado') AS assigned_user,
-                users_creator.full_name AS created_user
+                users_creator.full_name AS created_user,
+                users_creator.role AS created_user_role  -- Aquí traemos el rol del usuario creador
             FROM tickets 
             JOIN areas ON tickets.id_area = areas.id 
             JOIN categoria ON tickets.id_categoria = categoria.id 

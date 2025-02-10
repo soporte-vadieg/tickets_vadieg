@@ -89,10 +89,22 @@ const TicketTableBootstrap = ({ ticket }) => {
                 )}
               </td>
               <td>
-                <button className="btn btn-sm btn-outline-primary" onClick={(e) => {e.stopPropagation();
-                handleTicketClick(ticket.id); }}>
-                  Editar
-                </button>
+              <div>                 
+                  {/* Obtener el rol del usuario desde localStorage */}
+                  {localStorage.getItem("role") === "admin" && (
+                    <button
+                      className="btn btn-sm btn-outline-primary"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleTicketClick(ticket.id);
+                      }}
+    >
+      Editar
+    </button>
+  )}
+</div>
+            
+                
               </td>
             </tr>
           </tbody>
