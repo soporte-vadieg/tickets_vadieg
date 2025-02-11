@@ -1,25 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/bootstrap/css/bootstrap.min.css";
 import UpdateTicketForm from "../pages/UpdateTicketForm";
 
 const TicketTableBootstrap = ({ ticket }) => {
-  const [selectedTicketId, setSelectedTicketId] = useState(null);
+  const [selectedTicket, setSelectedTicket] = useState(null);
+  const [userRole, setUserRole] = useState(null);
 
-  const handleTicketClick = (id) => {
-    setSelectedTicketId(id);
+  useEffect(() => {
+    setUserRole(localStorage.getItem("role"));
+  }, []);
+
+  const handleTicketClick = (ticketData) => {
+    setSelectedTicket(ticketData);
   };
 
   const closeModal = () => {
-    setSelectedTicketId(null);
+    setSelectedTicket(null);
   };
 
   const isViewable = (filePath) => {
+    if (!filePath) return false;
     const viewableExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "pdf"];
     const fileExtension = filePath.split(".").pop().toLowerCase();
     return viewableExtensions.includes(fileExtension);
   };
 
   const formatDate = (dateString) => {
+    if (!dateString) return "N/A";
     const date = new Date(dateString);
     return date.toLocaleDateString("es-ES", {
       year: "numeric",
@@ -28,12 +35,13 @@ const TicketTableBootstrap = ({ ticket }) => {
     });
   };
 
+
   return (
     <div className="container mt-4">
       <div className="table-responsive">
         <table className="table table-bordered table-hover">
           <thead className="table-primary">
-            <tr>
+            <tr>  
               <th>ID</th>
               <th>Creado</th>
               <th>Título</th>
@@ -49,7 +57,7 @@ const TicketTableBootstrap = ({ ticket }) => {
             </tr>
           </thead>
           <tbody>
-            <tr >
+            <tr>
               <td>{ticket.id}</td>
               <td>{ticket.created_user}</td>
               <td>{ticket.title}</td>
@@ -64,11 +72,10 @@ const TicketTableBootstrap = ({ ticket }) => {
               <td>{ticket.area_nombre}</td>
               <td>{ticket.categoria_nombre}</td>
               <td>{ticket.assigned_user}</td>
-             
               <td>
                 {ticket.file_path && (
                   <>
-                    {isViewable(ticket.file_path) ? (
+                    {isViewable(ticket.file_path) && (
                       <a
                         href={`http://localhost:5000/${ticket.file_path}`}
                         target="_blank"
@@ -77,7 +84,7 @@ const TicketTableBootstrap = ({ ticket }) => {
                       >
                         Ver
                       </a>
-                    ) : null}
+                    )}
                     <a
                       href={`http://localhost:5000/${ticket.file_path}`}
                       download
@@ -89,22 +96,17 @@ const TicketTableBootstrap = ({ ticket }) => {
                 )}
               </td>
               <td>
-              <div>                 
-                  {/* Obtener el rol del usuario desde localStorage */}
-                  {localStorage.getItem("role") === "admin" && (
-                    <button
-                      className="btn btn-sm btn-outline-primary"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleTicketClick(ticket.id);
-                      }}
-    >
-      Editar
-    </button>
-  )}
-</div>
-            
-                
+                {userRole === "admin" && (
+                  <button
+                    className="btn btn-sm btn-outline-primary"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleTicketClick(ticket);
+                    }}
+                  >
+                    Editar
+                  </button>
+                )}
               </td>
             </tr>
           </tbody>
@@ -112,7 +114,7 @@ const TicketTableBootstrap = ({ ticket }) => {
       </div>
 
       {/* Formulario de actualización si se selecciona un ticket */}
-      {selectedTicketId && <UpdateTicketForm ticketId={selectedTicketId} onClose={closeModal} />}
+      {selectedTicket && <UpdateTicketForm ticket={selectedTicket} onClose={closeModal} />}
     </div>
   );
 };

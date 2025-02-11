@@ -10,7 +10,8 @@ const getTickets = async (req, res) => {
                 tickets.title, 
                 tickets.description, 
                 tickets.status, 
-                tickets.urgency, 
+                tickets.urgency,
+                tickets.file_path, 
                 tickets.created_at, 
                 areas.name AS area_nombre, 
                 categoria.name AS categoria_nombre, 
@@ -114,7 +115,8 @@ const createTicket = async (req, res) => {
 // Actualizar un ticket existente
 const updateTicket = async (req, res) => {
     const { id } = req.params;
-    const { status, assigned_to } = req.body;
+    const { status, assigned_to ,title} = req.body;   
+
 
     // Validaciones
     if (!status && !assigned_to) {
@@ -132,7 +134,7 @@ const updateTicket = async (req, res) => {
         const text = `
             Se te ha asignado un nuevo ticket con los siguientes detalles:
 
-            ID del Ticket: ${id}
+            ID del Ticket: ${id}            
             Estado: ${status || 'Sin cambios'}
             Fecha de asignación: ${new Date().toLocaleDateString()}
 

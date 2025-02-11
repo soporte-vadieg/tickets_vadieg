@@ -18,11 +18,9 @@ const storage = multer.diskStorage({
 const upload = multer({ storage }); // Define el middleware "upload"
 // Obtener todos los tickets (protegido)
 router.get('/', verifyToken, getTickets);
-
 router.post('/get-user-email', getUserEmail);
 // Crear un nuevo ticket (protegido)
 router.post('/create-tickets', upload.single('file'), createTicket);
-
 // Actualizar un ticket existente (protegido)
 router.put('/:id', verifyToken, updateTicket);
 
@@ -30,7 +28,7 @@ router.get('/tickets', async (req, res) => {
     try {
         const query = `
         SELECT tickets.id, tickets.title, tickets.description, 
-        tickets.status, tickets.urgency, tickets.created_at, 
+        tickets.status, tickets.urgency, tickets.created_at, tickets.file_path,
         areas.name AS area_nombre, categoria.name AS categoria_nombre,
          IFNULL(users.full_name, 'No asignado') AS assigned_user 
          FROM tickets JOIN areas ON tickets.id_area = areas.id 

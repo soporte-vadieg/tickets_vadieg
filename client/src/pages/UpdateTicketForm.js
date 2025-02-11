@@ -3,11 +3,11 @@ import axios from 'axios';
 import "../styles/bootstrap/css/bootstrap.min.css"; // Asegúrate de que este CSS esté importado
 import "../styles/UpdateTicketForm.css"; // Asegúrate de que este CSS esté importado para mantener la coherencia
 
-const UpdateTicketForm = ({ ticketId, onClose }) => {
+const UpdateTicketForm = ({ ticket, onClose }) => {
     const [status, setStatus] = useState('');   
     const [assignedTo, setAssignedTo] = useState('');
     const [observacion, setObservacion] = useState('');
-    const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState([]);    
 
     // Obtener los usuarios disponibles para asignar al ticket
     useEffect(() => {
@@ -33,12 +33,12 @@ const UpdateTicketForm = ({ ticketId, onClose }) => {
             assigned_to: assignedTo || null,
             observacion: observacion || null // Agregar observación
         };
-    
+      
 
         // Obtener el token de autenticación (suponiendo que está almacenado en localStorage o estado)
         const token = localStorage.getItem('authToken'); // O usa el estado si lo tienes
-    
-        axios.put(`http://localhost:5000/api/tickets/${ticketId}`, updatedTicket, {
+
+        axios.put(`http://localhost:5000/api/tickets/${ ticket.id}`, updatedTicket, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
