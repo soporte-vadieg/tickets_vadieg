@@ -8,7 +8,7 @@ import "../styles/TicketListPage.css";
 const TicketListPage = () => {
     const [tickets, setTickets] = useState([]);
     const [filterStatus, setFilterStatus] = useState("all");
-    const [filterArea, setFilterArea] = useState("all");
+
     const [filterUser, setFilterUser] = useState("all");
 
     useEffect(() => {
@@ -36,13 +36,11 @@ const TicketListPage = () => {
 
     const filteredTickets = tickets.filter(ticket => 
         (filterStatus === 'all' || ticket.status === filterStatus) &&
-        (filterArea === 'all' || (ticket.area_nombre && ticket.area_nombre.trim().toLowerCase() === filterArea.trim().toLowerCase())) &&
         (filterUser === 'all' || (ticket.created_user && ticket.created_user.trim().toLowerCase() === filterUser.trim().toLowerCase()))
     );
 
     const groupedTickets = groupTicketsByStatus(filteredTickets);
 
-    const uniqueAreas = [...new Set(tickets.map(ticket => ticket.area_nombre?.trim()).filter(area => area))];
     const uniqueUsers = [...new Set(tickets.map(ticket => ticket.created_user?.trim()).filter(user => user))];
 
     return (
@@ -63,16 +61,7 @@ const TicketListPage = () => {
                         </select>
                     </div>
                     
-                    <div>
-                        <label className="page-title">Área:</label>
-                        <select className="form-select" onChange={(e) => setFilterArea(e.target.value)} value={filterArea}>
-                            <option value="all">Todas</option>
-                            {uniqueAreas.map(area => (
-                                <option key={area} value={area.toLowerCase()}>{area}</option>
-                            ))}
-                        </select>
-                    </div>
-
+        
                     <div>
                         <label className="page-title">Usuario:</label>
                         <select className="form-select" onChange={(e) => setFilterUser(e.target.value)} value={filterUser}>

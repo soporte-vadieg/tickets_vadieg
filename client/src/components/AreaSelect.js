@@ -24,7 +24,7 @@ const AreaSelect = ({ selectedArea, onChange }) => {
     return (
         <div style={{ marginBottom: '10px' }}>
             <label htmlFor="area-select" style={{ display: 'block', marginBottom: '5px' }}>
-                Área:
+                Área destino:
             </label>
             {loading ? (
                 <p style={{ color: '#888', fontSize: '14px' }}>Cargando áreas...</p>

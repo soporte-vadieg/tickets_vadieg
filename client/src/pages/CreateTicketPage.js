@@ -61,21 +61,18 @@ const FormContainer = styled.div`
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 `;
-
 // Título del formulario
 const Title = styled.h2`
   margin-bottom: 1rem;
   text-align: center;
   color: #2c3e50;
 `;
-
 // Mensaje de error
 const ErrorMessage = styled.p`
   color: red;
   text-align: center;
   margin-bottom: 1rem;
 `;
-
 // Estilos para los inputs
 const Input = styled.input`
   width: 100%;
@@ -85,7 +82,6 @@ const Input = styled.input`
   border-radius: 5px;
   font-size: 1rem;
 `;
-
 // Estilos para el textarea
 const Textarea = styled.textarea`
   width: 100%;
@@ -95,7 +91,6 @@ const Textarea = styled.textarea`
   border-radius: 5px;
   font-size: 1rem;
 `;
-
 // Estilos para el select
 const Select = styled.select`
   width: 100%;
@@ -105,7 +100,6 @@ const Select = styled.select`
   border-radius: 5px;
   font-size: 1rem;
 `;
-
 // Botón principal
 const Button = styled.button`
   width: 100%;
@@ -127,7 +121,6 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 `;
-
   
 /* ============================= */
 /*       Componente Main         */
