@@ -6,33 +6,36 @@ const userRoutes = require('./routes/userRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
 const areaRutes = require('./routes/areaRutes');
 const cateRoutes = require('./routes/cateRoutes');
+const conteRoutes = require('./routes/conteRoutes');
 dotenv.config();
 const app = express();
 const path = require('path');
+const multer = require('multer'); // Importa multer
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/'); // Carpeta donde se guardarán los archivos
+    },
+    filename: (req, file, cb) => {
+        const uniqueSuffix = `${Date.now()}-${file.originalname}`;
+        cb(null, uniqueSuffix); // Genera un nombre único para el archivo
+    },
+});
+const upload = multer({ storage });
 
-// Conexión a la base de datos
-/*db.connect((err) => {
-    if (err) {
-        console.error('Error al conectar con la base de datos:', err.message);
-    } else {
-        console.log('Conectado a la base de datos.');
-    }
-});*/
 
 // Middlewares
 app.use(cors());
 app.use(express.json());
 
 // Rutas
-app.use('/api/users', userRoutes);
-
-
-app.use('/api/tickets', ticketRoutes);
-app.use('/api/areas',areaRutes);
-app.use('/api/categorias',cateRoutes);
-
-
+app.use('/api/', userRoutes);
+app.use('/api/', ticketRoutes);
+app.use('/api/',areaRutes);
+app.use('/api/',cateRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/', conteRoutes);
+
+
 
 // Middleware para manejar rutas no encontradas
 app.use((req, res, next) => {
@@ -86,6 +89,42 @@ app.put('/api/tickets/:id', async (req, res) => {
         res.status(500).json({ message: "Error al actualizar el ticket" });
     }
 });
+
+// Ruta para agregar contenido nuevo con archivo
+app.post('/contenidos', upload.single('archivo'), (req, res) => {
+    console.log('Datos recibidos:', req.body); // Inspeccionar los datos del formulario
+    console.log('Archivo recibido:', req.file); // Inspeccionar el archivo recibido
+  
+    const { titulo, descripcion, clase } = req.body;
+    const archivo = req.file ? req.file.filename : null; // Obtener el nombre del archivo si existe
+  
+    // Validar los datos
+    if (!titulo || !descripcion || !clase || !archivo) {
+      return res.status(400).json({ message: 'Todos los campos son requeridos, incluido el archivo' });
+    }
+  
+    const fecha = new Date().toISOString().split('T')[0]; // Formatear la fecha
+  
+    // Insertar en la base de datos
+    const query = 'INSERT INTO contenidos (titulo, descripcion, clase, fecha, archivo) VALUES (?, ?, ?, ?, ?)';
+    db.query(query, [titulo, descripcion, clase, fecha, archivo], (err, results) => {
+      if (err) {
+        console.error('Error al agregar contenido:', err); // Detalles del error
+        return res.status(500).json({ message: 'Error al guardar el contenido' });
+      }
+  
+      // Responder con el contenido agregado
+      res.status(201).json({
+        id: results.insertId,
+        titulo,
+        descripcion,
+        clase,
+        fecha,
+        archivo,
+      });
+    });
+  });  
+
 // Puerto
 const PORT = process.env.PORT || 5000;
 

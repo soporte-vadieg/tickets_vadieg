@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api/users';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 export const login = async (credentials) => {
     try {
@@ -21,14 +21,14 @@ export const register = async (userData) => {
     }
 };
 export const getUsers = async () => {
-    const response = await axios.get('http://localhost:5000/api/users/users');
+    const response = await axios.get('http://localhost:5000/api/users');
     return response.data;
 };
 export const getAreas = async () => {
-    const response = await axios.get('http://localhost:5000/api/areas/areas');
+    const response = await axios.get('http://localhost:5000/api/areas');
     return response.data;
 };
 export const getCate = async () => {
-    const response = await axios.get('http://localhost:5000/api/categorias/categorias');
+    const response = await axios.get('http://localhost:5000/api/categorias');
     return response.data;
 };

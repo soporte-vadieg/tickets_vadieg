@@ -25,7 +25,6 @@ const AuthProvider = ({ children }) => {
         }    
     }, []);
 
-
     // Función para iniciar sesión
     const login = (userData) => {
         if (!userData || !userData.userId || !userData.username || !userData.email|| ! userData.full_name) {

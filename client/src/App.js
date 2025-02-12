@@ -10,7 +10,7 @@ import MainPage from './pages/MainPage';
 import UserListPage from './pages/UserListPage';
 import AreasListPage from './pages/AreasListPage';
 import CateListPage from './pages/CateListPage';
-
+import Home from './pages/HomePage.js';
 
 function App() {
     return (
@@ -19,9 +19,10 @@ function App() {
                 <Routes>
                     <Route path="/" element={<LoginPage />} />
                     <Route path="/main" element={<MainPage />} />
+                    <Route path="/home" element={<Home/>} />
                     <Route path="/tickets" element={<TicketListPage />} />
                     <Route path="/tickets/:id" element={<TicketDetailsPage />} />
-                    <Route path="/create-tickets" element={<CreateTicketPage />} />
+                    <Route path="/tickets-create" element={<CreateTicketPage />} />
                     <Route path="/register-page" element={<Register />} />
                     <Route path="/user-list" element={<UserListPage />} />
                     <Route path="/area-list" element={<AreasListPage />} />

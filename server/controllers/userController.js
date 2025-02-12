@@ -92,7 +92,6 @@ const loginUser = async (req, res) => {
         res.status(500).json({ message: 'Error al iniciar sesión.' });
     }
 };
-
 // Obtener lista de usuarios
 const getUsers = async (req, res) => {
     try {

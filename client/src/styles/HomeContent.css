@@ -1,0 +1,70 @@
+/* Estilos generales */
+.content-section {
+  max-width: 80%; /* Reduce el ancho al 80% del contenedor padre */
+  padding: 20px;
+  margin: 20px auto; /* Centra la sección horizontalmente */
+  background-color: rgba(214, 212, 212, 0.9);
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+}
+
+  /* Título de la sección */
+  .section-title {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 2px solid #EAA921;
+    padding-bottom: 10px;
+  }
+  
+  /* Estilo de los mensajes de error */
+  .error-message {
+    color: red;
+    font-size: 1.1em;
+    text-align: center;
+  }
+  
+  /* Mensaje cuando no hay contenido */
+  .no-content {
+    color: #666;
+    font-size: 1.2em;
+    text-align: center;
+  }
+  
+  /* Cartas deslizables */
+  .content-card {
+    background-color: rgba(252, 249, 249, 0.5); /* Negro con 80% de opacidad */
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .content-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Título del contenido */
+  .content-title {
+    font-size: 1.5em;
+    color: #EAA921;
+    margin-bottom: 10px;
+  }
+  
+  /* Descripción del contenido */
+  .content-description {
+    color: #555;
+    font-size: 1.1em;
+    margin-bottom: 15px;
+  }
+  
+  /* Fecha de publicación */
+  .content-date {
+    font-size: 1em;
+    color: #777;
+  }
+  

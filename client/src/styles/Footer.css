@@ -1,0 +1,26 @@
+
+.footer {
+    background-color: rgba(22, 21, 21, 0.8); /* Negro con 80% de opacidad */
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.footer-link {
+    color: #EAA921;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+}
