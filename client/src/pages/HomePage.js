@@ -7,7 +7,7 @@ import Navbar from '../pages/Navbar'; // Importa la Navbar
 const Home = () => {
     return (
         
-        <div>
+        <div className='home'>
              <Navbar /> {/* Agregamos la Navbar */}
 
             <div className="grupo-secciones">

@@ -7,12 +7,23 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import '../styles/HomeContent.css';
 
+const swiperWrapper = document.querySelector('.swiper-wrapper');
+const slides = document.querySelectorAll('.swiper-slide');
+
+if (slides.length < 5) { // Si hay pocos slides, duplicarlos
+  slides.forEach(slide => {
+    let clone = slide.cloneNode(true);
+    swiperWrapper.appendChild(clone);
+  });
+}
+
+
 const ContentSection = () => {
     const [contenidos, setContenidos] = useState([]);
 
     useEffect(() => {
         // Solicitar datos al backend
-        axios.get('http://localhost:5000/api/contenidos/contenidos')
+        axios.get('http://localhost:5000/api/contenidos')
             .then((response) => {
                 setContenidos(response.data); // Guardar datos obtenidos
             })

@@ -35,7 +35,7 @@ const TicketTableBootstrap = ({ ticket }) => {
     });
   };
 
-
+console.log(ticket)
   return (
     <div className="container mt-4">
       <div className="table-responsive">

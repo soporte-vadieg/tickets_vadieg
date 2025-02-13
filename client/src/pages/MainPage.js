@@ -28,17 +28,20 @@ const PageContainer = styled.div`
 `;
 // Navbar con el logo
 const Navbar = styled.nav`
-  position: relative;
-  z-index: 2;
-
-  padding: 1rem 2rem;
   display: flex;
   align-items: center;
-  background: rgba(70, 67, 67, 0.8); /* Fondo semi-transparente */
+  justify-content: space-between;
+  padding: 20px 20px;
+  background: rgba(107, 102, 102, 0.7);
+  color: white;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 10;
 `;
 // Logo
 const Logo = styled.img`
-  height: 50px; /* Ajusta el tamaño según necesites */
+  height: 40px; /* Ajusta el tamaño según necesites */
 `;
 // Contenedor principal para el contenido (se coloca sobre el overlay)
 const MainContainer = styled.div`
@@ -46,6 +49,7 @@ const MainContainer = styled.div`
   z-index: 1;
   text-align: center;
   margin-top: 50px;
+  
 `;
 // Título principal
 const Title = styled.h1`
@@ -53,7 +57,6 @@ const Title = styled.h1`
   font-weight: bold;
   color: #f1f1f1; /* Color claro para resaltar sobre el fondo oscuro */
 `;
-
 // Contenedor de botones
 const ButtonContainer = styled.div`
   margin-top: 30px;
@@ -62,7 +65,6 @@ const ButtonContainer = styled.div`
   flex-wrap: wrap;
   gap: 15px;
 `;
-
 // Botón reutilizable
 const Button = styled.button`
   padding: 12px 25px;
@@ -86,7 +88,6 @@ const LogoutButton = styled(Button)`
     background-color: darkred;
   }
 `;
-
 const MainPage = () => {
   const navigate = useNavigate();
   const { user, logout } = useContext(AuthContext);
@@ -109,14 +110,14 @@ const MainPage = () => {
         </Title>
         <ButtonContainer>
           <Button onClick={() => navigate('/home')}>Home</Button>
-          <Button onClick={() => navigate('/create-tickets')}>Crear Ticket</Button>
-          <Button onClick={() => navigate('/tickets')}>Lista Tickets</Button>
+          <Button onClick={() => navigate('/tickets-create')}>Crear Ticket</Button>
+          <Button onClick={() => navigate('/tickets-list')}>Lista Tickets</Button>
           {userRole === "admin" && (
         <>
           <Button onClick={() => navigate('/register-page')}>Crear Usuario</Button>
           <Button onClick={() => navigate('/user-list')}>Usuarios</Button>
           <Button onClick={() => navigate('/area-list')}>Areas</Button>
-          <Button onClick={() => navigate('/categoria')}>Categorias</Button>
+          <Button onClick={() => navigate('/categoria-list')}>Categorias</Button>
           </>
            )}
           <LogoutButton onClick={handleLogout}>Cerrar Sesión</LogoutButton>

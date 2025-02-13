@@ -20,13 +20,13 @@ function App() {
                     <Route path="/" element={<LoginPage />} />
                     <Route path="/main" element={<MainPage />} />
                     <Route path="/home" element={<Home/>} />
-                    <Route path="/tickets" element={<TicketListPage />} />
+                    <Route path="/tickets-list" element={<TicketListPage />} />
                     <Route path="/tickets/:id" element={<TicketDetailsPage />} />
                     <Route path="/tickets-create" element={<CreateTicketPage />} />
                     <Route path="/register-page" element={<Register />} />
                     <Route path="/user-list" element={<UserListPage />} />
                     <Route path="/area-list" element={<AreasListPage />} />
-                    <Route path="/categoria" element={<CateListPage />} />
+                    <Route path="/categoria-list" element={<CateListPage />} />
                 </Routes>
             </Router>
         </AuthProvider>

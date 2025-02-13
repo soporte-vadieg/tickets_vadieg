@@ -2,9 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { getTickets } from '../api/ticketApi';
 import TicketCard from '../components/TicketCard';
 import Navbar from '../pages/Navbar';
-import "../styles/bootstrap/css/bootstrap.min.css";
 import "../styles/TicketListPage.css";
+import styled from 'styled-components';
+import backgroundImg from '../assets/imagen_fondo2.jpg'; // Asegúrate de la ruta
+const PageContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+  background-image: url(${backgroundImg});
+  /* Elimina o comenta background-size si deseas que se repita la imagen en su tamaño original */
+  background-size: cover; 
+  background-position: center;
 
+  /* Overlay semitransparente */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 0;
+  }
+`;
 const TicketListPage = () => {
     const [tickets, setTickets] = useState([]);
     const [filterStatus, setFilterStatus] = useState("all");
@@ -44,7 +64,8 @@ const TicketListPage = () => {
     const uniqueUsers = [...new Set(tickets.map(ticket => ticket.created_user?.trim()).filter(user => user))];
 
     return (
-        <div>
+        <div >
+        <PageContainer>
             <Navbar />
             <div className="container mt-4" >
                 <h2 className="page-title">Lista de Tickets</h2>
@@ -89,6 +110,7 @@ const TicketListPage = () => {
                     ))}
                 </div>
             </div>
+            </PageContainer>
         </div>
     );
 };

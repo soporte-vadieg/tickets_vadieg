@@ -49,18 +49,18 @@ const Navbar = () => {
 
   return (
     <NavbarContainer>
-    <Logo src={logo} alt="Logo" onClick={() => navigate("/")} />
+    <Logo src={logo} alt="Logo" onClick={() => navigate("/main")} />
     <NavLinks>
       {/* Enlaces para TODOS los usuarios */}
-      <NavLink onClick={() => navigate("/create-tickets")}>Crear Ticket</NavLink>
-      <NavLink onClick={() => navigate("/tickets")}>Lista de Tickets</NavLink>
+      <NavLink onClick={() => navigate("/tickets-create")}>Crear Ticket</NavLink>
+      <NavLink onClick={() => navigate("/tickets-list")}>Lista de Tickets</NavLink>
 
       {/* Enlaces SOLO para ADMIN */}
       {userRole === "admin" && (
         <>
           <NavLink onClick={() => navigate("/user-list")}>Usuarios</NavLink>
           <NavLink onClick={() => navigate("/area-list")}>Áreas</NavLink>
-          <NavLink onClick={() => navigate("/categoria")}>Categorías</NavLink>
+          <NavLink onClick={() => navigate("/categoria-list")}>Categorías</NavLink>
         </>
       )}
 

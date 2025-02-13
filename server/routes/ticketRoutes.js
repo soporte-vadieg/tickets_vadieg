@@ -20,21 +20,32 @@ const upload = multer({ storage }); // Define el middleware "upload"
 router.get('/', verifyToken, getTickets);
 router.post('/get-user-email', getUserEmail);
 // Crear un nuevo ticket (protegido)
-router.post('/create-tickets', upload.single('file'), createTicket);
+router.post('/tickets-create', upload.single('file'), createTicket);
 // Actualizar un ticket existente (protegido)
 router.put('/:id', verifyToken, updateTicket);
 
 router.get('/tickets', async (req, res) => {
     try {
         const query = `
-        SELECT tickets.id, tickets.title, tickets.description, 
-        tickets.status, tickets.urgency, tickets.created_at, tickets.file_path,
-        areas.name AS area_nombre, categoria.name AS categoria_nombre,
-         IFNULL(users.full_name, 'No asignado') AS assigned_user 
-         FROM tickets JOIN areas ON tickets.id_area = areas.id 
-         JOIN categoria ON tickets.id_categoria = categoria.id 
-         LEFT JOIN users ON tickets.assigned_to = users.id 
-         ORDER BY tickets.id DESC;
+         SELECT 
+                tickets.id, 
+                tickets.title, 
+                tickets.description, 
+                tickets.status, 
+                tickets.urgency,
+                tickets.file_path, 
+                tickets.created_at, 
+                areas.name AS area_nombre, 
+                categoria.name AS categoria_nombre, 
+                IFNULL(users_assigned.full_name, 'No asignado') AS assigned_user,
+                users_creator.full_name AS created_user,
+                users_creator.role AS created_user_role  -- Aquí traemos el rol del usuario creador
+            FROM tickets 
+            JOIN areas ON tickets.id_area = areas.id 
+            JOIN categoria ON tickets.id_categoria = categoria.id 
+            LEFT JOIN users AS users_assigned ON tickets.assigned_to = users_assigned.id 
+            JOIN users AS users_creator ON tickets.created_by = users_creator.id 
+            ORDER BY tickets.id DESC;
         `;
         const [rows] = await db.execute(query);
         res.json(rows);

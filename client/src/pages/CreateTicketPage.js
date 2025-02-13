@@ -4,9 +4,9 @@ import { AuthContext } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import backgroundImg from '../assets/imagen_fondo2.jpg'; // Asegúrate de la ruta
-import logo from '../assets/vadieg_logo_blanco.svg'; // Asegúrate de la ruta
 import AreaSelect from '../components/AreaSelect';
 import CateSelect from '../components/CateSelect';
+import Navbar from '../pages/Navbar';
 
 /* ============================= */
 /*       Styled Components       */
@@ -33,22 +33,6 @@ const PageContainer = styled.div`
     z-index: 0;
   }
 `;
-
-// Navbar con logo
-const Navbar = styled.nav`
-  position: relative;
-  z-index: 2;  
-  padding: 1rem 2rem;
-  display: flex;
-  align-items: center;
-  background: rgba(88, 78, 78, 0.8);
-`;
-
-// Logo de la Navbar
-const Logo = styled.img`
-  height: 50px;
-`;
-
 // Contenedor del formulario (contenido principal)
 const FormContainer = styled.div`
   position: relative;
@@ -184,7 +168,7 @@ const CreateTicketPage = () => {
       // Reinicia el formulario
       setTicket({ title: '', description: '', urgency: 'baja', area: '', categoria: '' });
       setFile(null);
-      navigate('/tickets');
+      navigate('/tickets-list');
     } catch (error) {
       console.error('Error al crear el ticket:', error);
       setError('Hubo un problema al crear el ticket. Inténtalo de nuevo.');
@@ -195,9 +179,7 @@ const CreateTicketPage = () => {
 
   return (
     <PageContainer>
-      <Navbar>
-        <Logo src={logo} alt="Logo" />
-      </Navbar>
+      <Navbar />
       <FormContainer>
         <Title>Crear Ticket</Title>
         {error && <ErrorMessage>{error}</ErrorMessage>}

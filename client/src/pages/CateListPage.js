@@ -1,7 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { getCate } from '../api/authApi';
 import "../styles/bootstrap/css/bootstrap.min.css"; // Importar estilos de Bootstrap
-import logo from '../assets/vadieg_logo_blanco.svg';
+import Navbar from '../pages/Navbar';
+import styled from 'styled-components';
+import backgroundImg from '../assets/imagen_fondo2.jpg'; // Asegúrate de la ruta
+const PageContainer = styled.div`
+  position: relative;
+  min-height: 100vh;
+  background-image: url(${backgroundImg});
+  /* Elimina o comenta background-size si deseas que se repita la imagen en su tamaño original */
+  background-size: cover; 
+  background-position: center;
+
+  /* Overlay semitransparente */
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 0;
+  }
+`;
 
 const CateListPage = () => {
     const [categoria, setCate] = useState([]);
@@ -27,12 +49,10 @@ const CateListPage = () => {
     if (error) return <p className="text-center text-danger mt-4">{error}</p>;
 
     return (
-        <div  className="container mt-5"style={{ padding: '20px', textAlign: 'center' }}>
-                    <nav className="navbar">
-                                <div className="navbar-logo">
-                                <img src={logo} alt="Logo" />
-                                </div>
-                    </nav>
+        <div>
+     <PageContainer>
+                <Navbar />
+         <div className="container mt-5">     
             <h1>Lista de categoria</h1>
             <table className="table table-striped table-bordered" border="1" style={{ margin: '20px auto', width: '80%' }}>
                 <thead className="table-primary text-center">
@@ -52,6 +72,8 @@ const CateListPage = () => {
                     ))}
                 </tbody>
             </table>
+        </div>  
+         </PageContainer>
         </div>
     );
 };

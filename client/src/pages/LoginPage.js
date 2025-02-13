@@ -5,6 +5,7 @@ import { login } from '../api/authApi';
 import '../styles/LoginPage.css';
 import logo from '../assets/vadieg_logo_blanco.svg'; // Asegúrate de tener esta imagen en la ruta indicada
 
+
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({ username: '', password: '' });
   const { login: loginUser } = useContext(AuthContext);

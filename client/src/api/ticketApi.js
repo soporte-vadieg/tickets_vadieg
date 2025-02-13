@@ -35,7 +35,7 @@ export const createTicket = async (ticketData) => {
             throw new Error('Los datos del ticket son inválidos');
         }
  
-        const response = await axios.post('http://localhost:5000/api/tickets/create-tickets', ticketData, {
+        const response = await axios.post('http://localhost:5000/api/tickets-create', ticketData, {
             headers: {
                 'Content-Type': 'multipart/form-data', // Asegúrate de usar este encabezado para archivos
          
