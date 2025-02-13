@@ -12,16 +12,22 @@ const PageContainer = styled.div`
   background-size: cover; 
   background-position: center;
 
-  /* Overlay semitransparente */
+  /* Capa oscura superpuesta */
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 0;
+    background: rgba(0, 0, 0, 0.65); /* Ajusta la opacidad aquí */
+    z-index: 1; /* Detrás del contenido */
+  }
+
+  /* Asegura que el contenido se vea por encima de la cortina */
+  > * {
+    position: relative;
+    z-index: 2;
   }
 `;
 
