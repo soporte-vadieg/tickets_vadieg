@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
 import { login } from '../api/authApi';
 import '../styles/LoginPage.css';
-import logo from '../assets/vadieg_logo_blanco.svg'; // Asegúrate de tener esta imagen en la ruta indicada
 
 
 const LoginPage = () => {
@@ -42,19 +41,14 @@ const LoginPage = () => {
 
   return (
     <div className="login-page">
-      {/* Navbar con logo */}
-      <nav className="navbar">
-        <div className="navbar-logo">
-          <img src={logo} alt="Logo" />
-        </div>
-      </nav>
-
+  
       {/* Contenedor del formulario */}
       <div className="login-container">
         <form onSubmit={handleSubmit} className="login-form">
+        <h2 >Inicio de Sesion</h2>
           <input
             type="text"
-            placeholder="Username"
+            placeholder="Nombre de Usuario"
             value={credentials.username}
             onChange={(e) =>
               setCredentials({ ...credentials, username: e.target.value })
@@ -62,13 +56,13 @@ const LoginPage = () => {
           />
           <input
             type="password"
-            placeholder="Password"
+            placeholder="Contraseña"
             value={credentials.password}
             onChange={(e) =>
               setCredentials({ ...credentials, password: e.target.value })
             }
           />
-          <button type="submit">Login</button>
+          <button type="submit">Ingresar</button>
         </form>
       </div>
     </div>

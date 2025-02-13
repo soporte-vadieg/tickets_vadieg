@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import logo from '../assets/vadieg_logo_blanco.svg'; // Asegúrate de que la ruta del logo es correcta
+import { Link, useLocation } from 'react-router-dom'; // Importamos useLocation
 
 const NavbarContainer = styled.nav`
   display: flex;
@@ -15,17 +16,14 @@ const NavbarContainer = styled.nav`
   width: 100%;
   z-index: 10;
 `;
-
 const Logo = styled.img`
   height: 40px;
   cursor: pointer;
 `;
-
 const NavLinks = styled.div`
   display: flex;
   gap: 15px;
 `;
-
 const NavLink = styled.button`
   background: none;
   border: none;
@@ -40,27 +38,40 @@ const NavLink = styled.button`
 const Navbar = () => {
   const navigate = useNavigate();
   const userRole = localStorage.getItem('role');
+  const location = useLocation(); // Obtenemos la ruta actual
   const handleLogout = () => {
     // Eliminar el token de autenticación o cualquier información de sesión
     localStorage.removeItem('authToken');
     localStorage.removeItem('role');
-    navigate('/login'); // Redirigir a la página de login (o donde sea apropiado)
+    navigate('/'); 
   };
 
   return (
     <NavbarContainer>
     <Logo src={logo} alt="Logo" onClick={() => navigate("/main")} />
     <NavLinks>
-      {/* Enlaces para TODOS los usuarios */}
-      <NavLink onClick={() => navigate("/tickets-create")}>Crear Ticket</NavLink>
-      <NavLink onClick={() => navigate("/tickets-list")}>Lista de Tickets</NavLink>
+    {/* Solo mostrar este enlace si NO estamos en /ticket-create */}
+      {location.pathname !== "/tickets-create" && (
+        <li><Link to="/tickets-create">Crear Ticket</Link></li>
+      )}
+
+      {location.pathname !== "/tickets-list" && (
+        <li><Link to="/tickets-list">Lista de Tickets</Link></li>
+      )}
+
 
       {/* Enlaces SOLO para ADMIN */}
       {userRole === "admin" && (
         <>
-          <NavLink onClick={() => navigate("/user-list")}>Usuarios</NavLink>
-          <NavLink onClick={() => navigate("/area-list")}>Áreas</NavLink>
-          <NavLink onClick={() => navigate("/categoria-list")}>Categorías</NavLink>
+           {location.pathname !== "/user-list" && (
+        <li><Link to="/user-list">Usuarios</Link></li>
+        )}
+            {location.pathname !== "/area-list" && (
+          <li><Link to="/area-list">Áreas</Link></li>
+          )}          
+                {location.pathname !== "/categoria-list" && (
+                <li><Link to="/categoria-list">Categorías</Link></li>
+                )}     
         </>
       )}
 
