@@ -109,7 +109,7 @@ const MainPage = () => {
           Bienvenido, {user?.full_name || 'Usuario'} al Sistema de Gestión de Tickets
         </Title>
         <ButtonContainer>
-          <Button onClick={() => navigate('/home')}>Home</Button>
+          <Button onClick={() => navigate('/home')}>Portal</Button>
           <Button onClick={() => navigate('/tickets-create')}>Crear Ticket</Button>
           <Button onClick={() => navigate('/tickets-list')}>Lista Tickets</Button>
           {userRole === "admin" && (

@@ -76,7 +76,7 @@ const TicketListPage = () => {
         <PageContainer>
             <Navbar />
             <div className="container mt-4" >
-                <h2 className="page-title">Lista de Tickets</h2>
+                <h2>Lista de Tickets</h2>
 
                 {/* Filtros en una fila sdasdasasd */}
                 <div className="d-flex flex-wrap gap-3 align-items-center mb-3 justify-content-around" >

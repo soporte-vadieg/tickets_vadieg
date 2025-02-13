@@ -1,0 +1,202 @@
+
+.contenido{
+  position: relative;
+  width: 100vw;          /* 100% del ancho de la ventana */
+  height: 100vh;         /* 100% de la altura de la ventana */
+  background-image: url('../assets/imagen_fondo.jpg');
+  background-position: top left;   /* La imagen comienza desde la esquina superior izquierda */
+  background-repeat: repeat; 
+}
+
+
+ul {
+    list-style: none;
+    padding: 5px;
+}
+
+li {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    margin-right: 10px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+h2,p{
+    padding: 10px;
+}
+
+button:hover {
+    background-color: #ddd;
+}
+/* Estilos para el modal */
+.modal {
+    display: flex; /* Se mantiene oculto por defecto, se mostrará cuando editContent esté presente */
+    position: fixed;
+    z-index: 1; /* Asegura que el modal esté sobre otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro y semitransparente */
+    padding-top: 50px;
+    box-sizing: border-box;
+  }
+  
+  /* Contenido del modal */
+  .modal-content {
+    background-color: white;
+    margin: 5% auto; /* Centra el modal en la pantalla */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%; /* Cambia el tamaño según tus necesidades */
+    max-height: 250px;
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-in-out; /* Animación de entrada */
+  }
+  
+  /* Animación de entrada */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  /* Estilos para el botón de cerrar */
+  .close {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .add-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 20px;
+  }
+  
+
+ /* Estilos para el formulario dentro del modal */
+/* Estilos para el formulario dentro del modal */
+
+  form label {
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+  
+  form input, form textarea {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  form textarea {
+    resize: vertical; /* Permite cambiar el tamaño vertical */
+    min-height: 100px; /* Asegura que el área de texto tenga una altura mínima */
+  }
+  
+  /* Opcional: Añadir un fondo a los campos para mejorar la visibilidad */
+  form input, form textarea {
+    background-color: #f9f9f9;
+  }
+  
+  /* Estilo para los botones de acción */
+  form button {
+    padding: 10px 15px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  form button[type="submit"] {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  form button[type="button"] {
+    background-color: #f44336;
+    color: white;
+  }
+  
+  form button:hover {
+    background-color: #45a049;
+  }
+  
+  form button[type="button"]:hover {
+    background-color: #d32f2f;
+  }
+  
+  
+  
+  /* Para pantallas más pequeñas */
+  @media screen and (max-width: 600px) {
+    .modal-content {
+      width: 90%;
+    }
+  }
+  /*Menu agregar contenido*/
+  /* Estilo para el contenedor */
+.select-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+  }
+  
+  /* Etiqueta */
+  .select-container label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  /* Menú desplegable */
+  .select-container select {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #f9f9f9;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s, background-color 0.3s;
+  }
+  
+  /* Efecto hover */
+  .select-container select:hover {
+    border-color: #007bff;
+    background-color: #e9f5ff;
+  }
+  
+  /* Efecto focus */
+  .select-container select:focus {
+    outline: none;
+    border-color: #0056b3;
+    background-color: #e9f5ff;
+  }
+  

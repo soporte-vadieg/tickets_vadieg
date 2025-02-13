@@ -11,6 +11,7 @@ import UserListPage from './pages/UserListPage';
 import AreasListPage from './pages/AreasListPage';
 import CateListPage from './pages/CateListPage';
 import Home from './pages/HomePage.js';
+import Contenido from './pages/ContenidoPage.js';
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                     <Route path="/tickets/:id" element={<TicketDetailsPage />} />
                     <Route path="/tickets-create" element={<CreateTicketPage />} />
                     <Route path="/register-page" element={<Register />} />
+                    <Route path="/contenido-list" element={<Contenido />} />
                     <Route path="/user-list" element={<UserListPage />} />
                     <Route path="/area-list" element={<AreasListPage />} />
                     <Route path="/categoria-list" element={<CateListPage />} />
