@@ -18,6 +18,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage }); // Define el middleware "upload"
 // Obtener todos los tickets (protegido)
 router.get('/', verifyToken, getTickets);
+
 router.post('/get-user-email', getUserEmail);
 // Crear un nuevo ticket (protegido)
 router.post('/tickets-create', upload.single('file'), createTicket);

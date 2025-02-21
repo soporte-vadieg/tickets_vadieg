@@ -91,39 +91,48 @@ app.put('/api/tickets/:id', async (req, res) => {
 });
 
 // Ruta para agregar contenido nuevo con archivo
-app.post('/contenidos', upload.single('archivo'), (req, res) => {
-    console.log('Datos recibidos:', req.body); // Inspeccionar los datos del formulario
-    console.log('Archivo recibido:', req.file); // Inspeccionar el archivo recibido
-  
+app.delete('/api/contenidos/:id', (req, res) => {
+  const id = req.params.id;
+
+  const sql = 'DELETE FROM contenidos WHERE id = ?';
+  db.query(sql, [id], (err, result) => {
+    if (err) {
+      console.error('Error al eliminar contenido:', err);
+      return res.status(500).json({ message: 'Error en el servidor', error: err });
+    }
+    
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Contenido no encontrado' });
+    }
+    
+    res.json({ message: 'Contenido eliminado correctamente' });
+  });
+});
+// Ruta para editar un contenido
+app.put('/contenidos/:id', (req, res) => {
+    const id = parseInt(req.params.id, 10); // ID correcto
     const { titulo, descripcion, clase } = req.body;
-    const archivo = req.file ? req.file.filename : null; // Obtener el nombre del archivo si existe
   
-    // Validar los datos
-    if (!titulo || !descripcion || !clase || !archivo) {
-      return res.status(400).json({ message: 'Todos los campos son requeridos, incluido el archivo' });
+    // Asegúrate de que los campos sean válidos
+    if (!titulo || !descripcion || !clase) {
+      return res.status(400).send('Todos los campos son requeridos');
     }
   
-    const fecha = new Date().toISOString().split('T')[0]; // Formatear la fecha
-  
-    // Insertar en la base de datos
-    const query = 'INSERT INTO contenidos (titulo, descripcion, clase, fecha, archivo) VALUES (?, ?, ?, ?, ?)';
-    db.query(query, [titulo, descripcion, clase, fecha, archivo], (err, results) => {
-      if (err) {
-        console.error('Error al agregar contenido:', err); // Detalles del error
-        return res.status(500).json({ message: 'Error al guardar el contenido' });
+    db.query('SELECT * FROM contenidos WHERE id = ?', [id], (err, results) => {
+      if (err) return res.status(500).send('Error al buscar el contenido');
+      if (results.length === 0) {
+        return res.status(404).send('Contenido no encontrado');
       }
   
-      // Responder con el contenido agregado
-      res.status(201).json({
-        id: results.insertId,
-        titulo,
-        descripcion,
-        clase,
-        fecha,
-        archivo,
+      // Si el contenido existe, continuar con la actualización
+      const query = 'UPDATE contenidos SET titulo = ?, descripcion = ?, clase = ? WHERE id = ?';
+      db.query(query, [titulo, descripcion, clase, id], (err, results) => {
+        if (err) return res.status(500).send('Error al actualizar el contenido');
+        res.status(200).send('Contenido actualizado');
       });
     });
-  });  
+  });
+
 
 // Puerto
 const PORT = process.env.PORT || 5000;

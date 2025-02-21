@@ -115,6 +115,7 @@ const MainPage = () => {
           {userRole === "admin" && (
         <>
           <Button onClick={() => navigate('/register-page')}>Crear Usuario</Button>
+          <Button onClick={() => navigate('/contenido-list')}>Contenido</Button>
           <Button onClick={() => navigate('/user-list')}>Usuarios</Button>
           <Button onClick={() => navigate('/area-list')}>Areas</Button>
           <Button onClick={() => navigate('/categoria-list')}>Categorias</Button>
