@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:5000/api/tickets';
+const API_URL = 'http://192.168.1.215:5000/api/tickets';
 
 
 
@@ -35,7 +35,7 @@ export const createTicket = async (ticketData) => {
             throw new Error('Los datos del ticket son inválidos');
         }
  
-        const response = await axios.post('http://localhost:5000/api/tickets-create', ticketData, {
+        const response = await axios.post('http://192.168.1.215:5000/api/tickets-create', ticketData, {
             headers: {
                 'Content-Type': 'multipart/form-data', // Asegúrate de usar este encabezado para archivos
          
@@ -64,7 +64,7 @@ export const updateTicket = async (ticketId, updates) => {
 };
 export const getAreas = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/api/areas', { headers: getAuthHeaders() });
+        const response = await axios.get('http://192.168.1.215:5000/api/areas', { headers: getAuthHeaders() });
         return response.data;
     } catch (error) {
         console.error('Error al obtener las areas:', error);
@@ -76,7 +76,7 @@ export const getAreas = async () => {
 };
 export const getCate = async () => {
     try {
-        const response = await axios.get('http://localhost:5000/api/categorias', { headers: getAuthHeaders() });
+        const response = await axios.get('http://192.168.1.215:5000/api/categorias', { headers: getAuthHeaders() });
         return response.data;
     } catch (error) {
         console.error('Error al obtener las categorias:', error);

@@ -77,7 +77,7 @@ console.log(ticket)
                   <>
                     {isViewable(ticket.file_path) && (
                       <a
-                        href={`http://localhost:5000/${ticket.file_path}`}
+                        href={`http://192.168.1.215:5000/${ticket.file_path}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-sm btn-outline-success me-2"
@@ -86,7 +86,7 @@ console.log(ticket)
                       </a>
                     )}
                     <a
-                      href={`http://localhost:5000/${ticket.file_path}`}
+                      href={`http://192.168.1.215:5000/${ticket.file_path}`}
                       download
                       className="btn btn-sm btn-outline-secondary"
                     >

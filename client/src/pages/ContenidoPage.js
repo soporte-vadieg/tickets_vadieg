@@ -11,7 +11,7 @@ const Content = () => {
 
   // Obtener contenidos desde el backend
   useEffect(() => {
-    axios.get('http://localhost:5000/api/contenidos')
+    axios.get('http://192.168.1.215:5000/api/contenidos')
       .then((response) => setContenidos(response.data))
       .catch((err) => console.error('Error al obtener contenidos:', err));
   }, []);  // Agregamos dependencia
@@ -62,8 +62,8 @@ const Content = () => {
   
     try {
       const url = editContent
-        ? `http://localhost:5000/api/contenidos/${editContent.id}`
-        : 'http://localhost:5000/api/contenidos';
+        ? `http://192.168.1.215:5000/api/contenidos/${editContent.id}`
+        : 'http://192.168.1.215:5000/api/contenidos';
       const method = editContent ? 'PUT' : 'POST';
   
       const response = await axios({
@@ -103,7 +103,7 @@ const Content = () => {
   // Función para eliminar un contenido
   const handleDelete = (id) => {
     if (window.confirm(`¿Estás seguro de que deseas eliminar este contenido ${id}?`)) {
-      axios.delete(`http://localhost:5000/api/contenidos/${id}`)
+      axios.delete(`http://192.168.1.215:5000/api/contenidos/${id}`)
         .then(() => {
           window.location.reload(); // Recarga la página después de eliminar
         })
@@ -178,7 +178,7 @@ const Content = () => {
                   {editContent && editContent.archivo && (
                     <div>
                       <p>Archivo actual:</p>
-                      <a href={`http://localhost:5000/uploads/${editContent.archivo}`} target="_blank" rel="noopener noreferrer">
+                      <a href={`http://192.168.1.215:5000/uploads/${editContent.archivo}`} target="_blank" rel="noopener noreferrer">
                         {editContent.archivo}
                       </a>
                     </div>
@@ -203,7 +203,7 @@ const Content = () => {
               <p>{item.fecha}</p>
               <h6>ID : {item.id}</h6>
               {item.archivo && (
-                <a href={`http://localhost:5000/uploads/${item.archivo}`} target="_blank" rel="noopener noreferrer">
+                <a href={`http://192.168.1.215:5000/uploads/${item.archivo}`} target="_blank" rel="noopener noreferrer">
                 Ver archivo
                 </a>
                 

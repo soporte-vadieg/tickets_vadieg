@@ -1,12 +1,11 @@
 /* Estilos generales */
 .content-section {
-  max-width: 80%; /* Reduce el ancho al 80% del contenedor padre */
+  max-width: 98%; /* Reduce el ancho al 80% del contenedor padre */
   padding: 20px;
-  margin: 20px auto; /* Centra la sección horizontalmente */
   background-color: rgba(214, 212, 212, 0.9);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  
+  margin-block-end: 10px;
 }
 
   /* Título de la sección */

@@ -40,7 +40,7 @@ const LoginPage = () => {
       // Activar animación de salida y redirigir después de un momento
       setTimeout(() => {
         setFadeOut(true);
-        setTimeout(() => navigate("/main"), 800);
+        setTimeout(() => navigate("/home"), 800);
       }, 1500); // Mostrar el mensaje por 1.5 segundos antes de la animación de salida
     } catch (error) {
       alert("Fallo en el inicio, revise las credenciales");
