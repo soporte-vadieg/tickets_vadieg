@@ -1,8 +1,9 @@
 const express = require('express');
-const multer = require('multer');
-const { getContenidos,editContenido} = require('../controllers/conteController');
-const conteController = require('../controllers/conteController');
+const { getContenidos,editContenido,addContenido} = require('../controllers/conteController');
+const { verifyToken } = require('../middleware/authMiddleware');
 const router = express.Router();
+const multer = require('multer');
+const db = require('../config/db');
 
 // Configuración de multer para subir archivos
 const storage = multer.diskStorage({
@@ -14,22 +15,25 @@ const storage = multer.diskStorage({
         cb(null, uniqueSuffix);
     },
 });
-const upload = multer({ storage });
+// Crear la instancia de multer
+const upload = multer({ storage }); // Define el middleware "upload"
+// Obtener todos los tickets (protegido)
+router.get('/contenidoNew', verifyToken, getContenidos);
+// Crear un nuevo ticket (protegido)
+router.post('/contenido-create', upload.single('file'), addContenido);
+// Actualizar un ticket existente (protegido)
+router.put('/:id', verifyToken, editContenido);
 
-
-// Llamar a los contenidos
-router.get('/contenidos', getContenidos );
-
-// Agregar contenido
-router.post('/contenidos', upload.single('archivo'),conteController.addContenido);
-
-// Editar contenido
-router.put('/contenidos/:id', upload.single('archivo'), editContenido);
-
-// Eliminar contenido
-router.delete('/contenidos/:id', conteController.deleteContenido);
-
-// Obtener un contenido por su ID
-router.get('/contenidos/:id', conteController.getContenidoById);
-
+router.get('/contenidos', async (req, res) => {
+    try {
+        const query = `
+         SELECT * FROM contenidos ORDER BY id DESC;
+        `;
+        const [rows] = await db.execute(query);
+        res.json(rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Error al obtener los tickets');
+    }
+});
 module.exports = router;

@@ -6,7 +6,7 @@ const userRoutes = require('./routes/userRoutes');
 const ticketRoutes = require('./routes/ticketRoutes');
 const areaRutes = require('./routes/areaRutes');
 const cateRoutes = require('./routes/cateRoutes');
-//const conteRoutes = require('./routes/conteRoutes');
+const conteRoutes = require('./routes/conteRoutes');
 dotenv.config();
 const app = express();
 const path = require('path');
@@ -31,10 +31,13 @@ app.use(express.json());
 // Rutas
 app.use('/api/', userRoutes);
 app.use('/api/', ticketRoutes);
+app.use('/api/', conteRoutes);
+
 app.use('/api/',areaRutes);
 app.use('/api/',cateRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 //app.use('/api/');
+/*
 //Funciones de contenidos
 app.get('/api/contenidos', async (req, res) => {
     try {
@@ -116,7 +119,7 @@ app.put('/api/contenidos/:id', (req, res) => {
       });
     });
   });
-
+*/
 // Middleware para manejar rutas no encontradas
 app.use((req, res, next) => {
     res.status(404).json({ message: 'Ruta no encontrada' });
@@ -127,7 +130,6 @@ app.use((err, req, res, next) => {
     console.error(err.stack);
     res.status(500).json({ message: 'Ocurrió un error en el servidor' });
 });
-
 app.get('/api/tickets/:id/history', (req, res) => {
   const { id } = req.params;
   db.query("SELECT * FROM historial_ticket WHERE ticket_id = ? ORDER BY fecha_cambio DESC", [id], (err, results) => {
@@ -138,7 +140,6 @@ app.get('/api/tickets/:id/history', (req, res) => {
       res.json(results);
   });
 });
-
 //Actualizar ticket y enivar al historial
 app.put('/api/tickets/:id', async (req, res) => {
     const { id } = req.params;
@@ -170,8 +171,6 @@ app.put('/api/tickets/:id', async (req, res) => {
         res.status(500).json({ message: "Error al actualizar el ticket" });
     }
 });
-
-
 // Puerto
 const PORT = process.env.PORT || 5000;
 

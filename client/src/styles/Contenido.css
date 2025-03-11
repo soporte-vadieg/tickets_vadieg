@@ -21,13 +21,16 @@ body::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
-.contenido{
+.contenidoList{
   position: relative;
-        /* 100% del ancho de la ventana */
+  width: 100%;;     /* 100% del ancho de la ventana */
   height: 120vh;         /* 100% de la altura de la ventana */
   background-image: url('../assets/imagen_fondo.jpg');
   background-size: cover; 
   background-position: center; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 ul {
   list-style: none;

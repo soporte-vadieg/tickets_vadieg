@@ -79,6 +79,9 @@ const Navbar = () => {
             {location.pathname !== "/contenido-list" && (
               <NavLink href="/contenido-list" onClick={(e) => handleNavigation(e, '/contenido-list')}>Lista Contenido</NavLink>
             )}
+            {location.pathname !== "/contenido-create" && (
+              <NavLink href="/contenido-create" onClick={(e) => handleNavigation(e, '/contenido-create')}>Crear Contenido</NavLink>
+            )}
 
             {location.pathname !== "/user-list" && (
               <NavLink href="/user-list" onClick={(e) => handleNavigation(e, '/user-list')}>Usuarios</NavLink>

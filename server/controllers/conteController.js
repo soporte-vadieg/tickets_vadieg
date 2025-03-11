@@ -1,9 +1,7 @@
 const db = require('../config/db'); // Configuración de mysql2/promise
-const path = require('path');
-const fs = require('fs');
 
 
-// Obtener todas las categorías
+// Obtener todas las contenidos
 const getContenidos = async (req, res) => {
     try {
         // Realizamos la consulta con promesas
@@ -14,27 +12,46 @@ const getContenidos = async (req, res) => {
         return res.status(500).json({ message: 'Error al obtener las categorías.' });
     }
 };
-const addContenido = (req, res) => {
+const addContenido = async(req, res) => {
     const id = req.params.id;
     const { titulo, descripcion, clase, fecha } = req.body;
-    const archivo = req.file ? req.file.filename : null;
+    const file = req.file;
+    let filePath = null;
+
+
+
+    if (file) {
+        filePath = file.path.replace(/\\/g, '/');
+    }
 
     if (!titulo || !descripcion || !clase || !fecha) {
         return res.status(400).json({ message: 'Todos los campos son requeridos' });
     }
 
-    let query = 'UPDATE contenidos SET titulo = ?, descripcion = ?, clase = ?, fecha = ?';
-    const values = [titulo, descripcion, clase, fecha];
+    const query = 'INSERT INTO contenidos (titulo, descripcion,fecha, clase) VALUES (?, ?, ?, ?)';
+  
+    try {
 
-    if (archivo) {
-        query += ', archivo = ?';
-        values.push(archivo);
+        // Ejecuta la consulta usando el pool de promesas
+        const [result] = await db.execute(query, [titulo, descripcion,fecha,clase]);
+        console.log('Resultado de la inserción:', result);
+
+        const ContenidoId = result.insertId; // Obtiene el ID del contenido creado
+        if (!ContenidoId) {
+            return res.status(500).json({ message: 'No se pudo crear el contenido.' });
+        }
+   
+
+        res.status(201).json({ message: 'contenido creado con éxito.', ContenidoId });
+    } catch (error) {
+        console.error('Error al crear el contenido:', error);
+        res.status(500).json({ message: 'Error al crear el contenido', error: error.message });
     }
 
-    query += ' WHERE id = ?';
-    values.push(id);
 
-    db.query(query, values, (err, result) => {
+
+
+/*    db.query(query, values, (err, result) => {
         if (err) {
             console.error('Error al actualizar contenido:', err);
             return res.status(500).json({ message: 'Error al actualizar contenido', error: err });
@@ -43,11 +60,11 @@ const addContenido = (req, res) => {
             return res.status(404).json({ message: 'Contenido no encontrado' });
         }
         res.json({ message: 'Contenido actualizado correctamente' });
-    });
+    });*/
 };
 // 📌 Editar un contenido
 const editContenido = (req, res) => {
-    const { id } = req.params;
+    /*const { id } = req.params;
     const { titulo, descripcion, clase, fecha } = req.body;
     const archivo = req.file ? req.file.filename : null;
 
@@ -72,11 +89,11 @@ const editContenido = (req, res) => {
             if (err) return res.status(500).json({ message: 'Error al actualizar contenido' });
             res.status(200).json({ message: 'Contenido actualizado' });
         });
-    });
+    });*/
 };
 // 📌 Eliminar un contenido
 const deleteContenido = (req, res) => {
-    const { id } = req.params.id;
+    /*const { id } = req.params.id;
 
     db.query('SELECT archivo FROM contenidos WHERE id = ?', [id], (err, results) => {
         if (err) return res.status(500).json({ message: 'Error en el servidor' });
@@ -98,13 +115,26 @@ const deleteContenido = (req, res) => {
 
             res.json({ message: 'Contenido eliminado correctamente' });
         });
-    });
+    });*/
 };
 const getContenidoById = async (req, res) => {
     const id = req.params.id;
     console.log(`ID recibido: ${id}`);  // Agrega esta línea para ver el ID recibido
 
-    if (!id || isNaN(id)) {
+    try {
+        const [rows] = await db.execute('SELECT * FROM contenidos WHERE id = ?', [id]);
+        if (rows.length === 0) {
+            return res.status(404).json({ message: 'contenidos no encontrado' });
+        }
+        res.json(rows[0]);
+    } catch (error) {
+        console.error('Error al obtener el contenidos:', error);
+        res.status(500).json({ message: 'Error al obtener el contenidos', error: error.message });
+    }
+
+
+
+   /* if (!id || isNaN(id)) {
         return res.status(400).json({ message: 'ID inválido' });
     }
 
@@ -119,7 +149,7 @@ const getContenidoById = async (req, res) => {
         }
 
         res.json(results[0]); // Devuelve el contenido encontrado
-    });
+    });*/
 };
 
 module.exports = { getContenidos ,addContenido,editContenido,deleteContenido,getContenidoById};

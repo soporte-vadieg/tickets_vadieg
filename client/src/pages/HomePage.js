@@ -8,7 +8,8 @@ import Navbar from '../pages/Navbar';
 
 // Lista de eventos con fechas
 const eventos = [
-    { fecha: new Date(2025, 2, 15), titulo: 'Cumpleaños de Juan' },
+    { fecha: new Date(2025, 2, 11), titulo: 'Cumpleaños de Martin Pereyra'},
+    { fecha: new Date(2025, 2, 11), titulo: 'Cumpleaños de Agustin Pereyra'},
     { fecha: new Date(2025, 2, 20), titulo: 'Reunión de equipo' },
     { fecha: new Date(2025, 2, 25), titulo: 'Capacitación en React' },
 ];
@@ -27,6 +28,8 @@ const contactos = [
 const Home = () => {
     const [date, setDate] = useState(new Date());
     const [searchTerm, setSearchTerm] = useState('');
+
+    
     // Filtra eventos para la fecha seleccionada
     const eventosDelDia = eventos.filter(evento =>
         evento.fecha.toDateString() === date.toDateString()
@@ -40,8 +43,10 @@ const Home = () => {
         <Navbar /> {/* Agregamos la Navbar */}
 
         <div className='home'>
-            
-            <div className="grupo-secciones">
+
+        <div className="grupo-secciones">
+            <div className='contendorIzquierdo'>
+           
                 {/* Calendario */}
                 <div className="calendario-container">
                     <h2>Calendario de Eventos</h2>
@@ -57,22 +62,46 @@ const Home = () => {
                     />
                     {/* Mostrar eventos debajo del calendario */}
                     <div className="eventos-del-dia">
-                        <h3>Eventos del {date.toDateString()}:</h3>
-                        {eventosDelDia.length > 0 ? (
-                            <ul>
-                                {eventosDelDia.map((evento, index) => (
-                                    <li key={index}>{evento.titulo}</li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>No hay eventos para esta fecha.</p>
-                        )}
-                    </div>
+                    <h4>Eventos del <br/>{date.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' })}:</h4>
+                    {eventosDelDia.length > 0 ? (
+                        <ul>
+                            {eventosDelDia.map((evento, index) => (
+                                <li key={index}>{evento.titulo}</li>
+                            ))}
+                        </ul>
+                    ) : (
+                        <p>No hay eventos para esta fecha.</p>
+                    )}
                 </div>
 
-                {/* Grupo 1: Cumpleaños y Empleado Nuevo */}
+                </div>
+                <div className="indicadores-container">
+                            <h3>Sugerencias /Ideas </h3>
+                            <div className="indicadores">
+                                {/* Indicador de progreso */}
+                                <div className="indicador">
+                                    <div className="indicador-circle" style={{ backgroundColor: '#4CAF50' }} />
+                                    <p>Sugerencias sobre el sistema nuevo o ideas de mejoras </p>
+                                </div>  
+                                                        {/* Enlace al formulario */}
+                        <div className="formulario-container">
+                        
+                        <a 
+                            href="https://192.168.1.215/api/pageSuge" 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="formulario-link"
+                        >
+                            Completa el formulario
+                        </a>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+    
                 <div className="seccion-grupo">
-                    <ContentSection tipo="" />                
+                    <ContentSection/>
+                  {/*  <button href="">Agregar Contenido</button>  */}          
                 </div>
                  {/* Buscador de contactos */}
                  <div className="contenedor-derecho">

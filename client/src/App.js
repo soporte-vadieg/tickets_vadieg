@@ -12,6 +12,7 @@ import AreasListPage from './pages/AreasListPage';
 import CateListPage from './pages/CateListPage';
 import Home from './pages/HomePage.js';
 import Contenido from './pages/ContenidoPage.js';
+import CreateContenido from './pages/CreateContenido.js';
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route path="/tickets-create" element={<CreateTicketPage />} />
                     <Route path="/register-page" element={<Register />} />
                     <Route path="/contenido-list" element={<Contenido />} />
+                    <Route path="/contenido-create" element={<CreateContenido />} />
                     <Route path="/user-list" element={<UserListPage />} />
                     <Route path="/area-list" element={<AreasListPage />} />
                     <Route path="/categoria-list" element={<CateListPage />} />
