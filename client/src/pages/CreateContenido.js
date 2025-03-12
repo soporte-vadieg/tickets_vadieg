@@ -3,6 +3,7 @@ import { createContenido } from '../api/ContenidoApi';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../pages/Navbar';
 import "bootstrap/dist/css/bootstrap.min.css";
+import '../styles/ContenidoCreate.css';
 
 const CreateContenido = () => {
   const [contenido, setContenido] = useState({
@@ -70,9 +71,9 @@ const CreateContenido = () => {
   };
 
   return (
-    <div>
+    <div className='CreatecontenidoList'>
       <Navbar />
-      <form onSubmit={handleSubmit} className="p-4 border rounded shadow-sm">
+      <form onSubmit={handleSubmit} className="container mt-4">
         {error && <div className="alert alert-danger">{error}</div>}
 
         <div className="mb-3">

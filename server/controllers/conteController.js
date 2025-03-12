@@ -17,9 +17,6 @@ const addContenido = async(req, res) => {
     const { titulo, descripcion, clase, fecha } = req.body;
     const file = req.file;
     let filePath = null;
-
-
-
     if (file) {
         filePath = file.path.replace(/\\/g, '/');
     }
@@ -64,10 +61,11 @@ const addContenido = async(req, res) => {
 };
 // 📌 Editar un contenido
 const editContenido = (req, res) => {
-    /*const { id } = req.params;
+   /* const { id } = req.params;
     const { titulo, descripcion, clase, fecha } = req.body;
     const archivo = req.file ? req.file.filename : null;
-
+    
+    console.log(id);
     if (!titulo || !descripcion || !clase || !fecha) {
         return res.status(400).json({ message: 'Todos los campos son requeridos' });
     }

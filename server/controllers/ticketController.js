@@ -51,6 +51,7 @@ const getEmailsByArea = async (id_area) => {
     const [rows] = await db.execute(query, [id_area]);
     return rows.length > 0 ? rows[0].emails.split(',') : [];
 };
+
 // Obtener lista de usuarios
 const getUsers = async (created_by) => {
     const query = 'SELECT full_name FROM users where id = ?';
@@ -76,7 +77,10 @@ const createTicket = async (req, res) => {
     try {
 
         const recipients = await getEmailsByArea(id_area);
-        console.log("Esto son los mails extraidos:" ,recipients);
+        const recipients1 = await getUserEmail(created_by);
+       
+
+        console.log("Esto son los mails extraidos:" ,recipients,recipients1);
         const userName = await getUsers(created_by);
 
         if (recipients.length === 0) {
@@ -104,7 +108,18 @@ const createTicket = async (req, res) => {
             Gracias,
             Equipo de Sistemas VADIEG
         `;
-        await sendEmail(recipients, subject, text,userName);
+            // Combinar recipients y recipients1 en un solo array
+                const allRecipients = [...recipients]; 
+                if (recipients1) {
+                    allRecipients.push(recipients1);
+                }
+
+                try {
+                    await sendEmail(allRecipients, subject, text);
+                } catch (emailError) {
+                    console.error("Error enviando email:", emailError);
+                    return res.status(500).json({ message: 'Ticket creado, pero fallo el envío de email.' });
+                }
 
         res.status(201).json({ message: 'Ticket creado con éxito.', ticketId });
     } catch (error) {

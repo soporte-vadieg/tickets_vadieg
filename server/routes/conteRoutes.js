@@ -22,7 +22,7 @@ router.get('/contenidoNew', verifyToken, getContenidos);
 // Crear un nuevo ticket (protegido)
 router.post('/contenido-create', upload.single('file'), addContenido);
 // Actualizar un ticket existente (protegido)
-router.put('/:id', verifyToken, editContenido);
+//router.put('/:id', editContenido);
 
 router.get('/contenidos', async (req, res) => {
     try {

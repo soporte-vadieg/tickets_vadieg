@@ -84,20 +84,21 @@ const Home = () => {
                                     <p>Sugerencias sobre el sistema nuevo o ideas de mejoras </p>
                                 </div>  
                                                         {/* Enlace al formulario */}
-                        <div className="formulario-container">
-                        
-                        <a 
-                            href="https://192.168.1.215/api/pageSuge" 
-                            target="_blank" 
-                            rel="noopener noreferrer" 
-                            className="formulario-link"
-                        >
-                            Completa el formulario
-                        </a>
-                    </div>
-                        </div>
-                    </div>
+                                    <div className="formulario-container">
+                                    
+                                        <a 
+                                            href="https://192.168.1.215/api/pageSuge" 
+                                            target="_blank" 
+                                            rel="noopener noreferrer" 
+                                            className="formulario-link"
+                                        >
+                                            Completa el formulario
+                                        </a>
+                                    </div>
+                            </div>
                 </div>
+
+            </div>
     
                 <div className="seccion-grupo">
                     <ContentSection/>

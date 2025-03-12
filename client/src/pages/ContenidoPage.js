@@ -7,7 +7,6 @@ const Content = () => {
   const [contenidos, setContenidos] = useState([]);
   const [formData, setFormData] = useState({ id: '', titulo: '', descripcion: '', clase: '', fecha: '', archivo: null });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modoFormulario, setModoFormulario] = useState('agregar'); // 'agregar' o 'editar'
 
   // Obtener contenidos desde el backend al cargar
   useEffect(() => {
@@ -22,17 +21,6 @@ const Content = () => {
       console.error('Error al obtener contenidos:', err);
     }
   };
-
-  // Setear fecha al abrir modal
-  useEffect(() => {
-    if (isModalOpen && modoFormulario === 'agregar') {
-      const today = new Date().toISOString().split('T')[0];
-      setFormData((prevData) => ({
-        ...prevData,
-        fecha: today,
-      }));
-    }
-  }, [isModalOpen, modoFormulario]);
 
   // Manejo de campos del formulario
   const handleInputChange = (e) => {
@@ -51,34 +39,6 @@ const Content = () => {
     }));
   };
 
-  // AGREGAR contenido
-  const agregarContenido = async (e) => {
-    e.preventDefault();
-    const { titulo, descripcion, clase, fecha, archivo } = formData;
-
-    if (!titulo || !descripcion || !clase || !fecha) {
-      alert('Todos los campos son requeridos');
-      return;
-    }
-
-    const formDataToSend = new FormData();
-    formDataToSend.append('titulo', titulo);
-    formDataToSend.append('descripcion', descripcion);
-    formDataToSend.append('clase', clase);
-    formDataToSend.append('fecha', fecha);
-    if (archivo) formDataToSend.append('archivo', archivo);
-
-    try {
-      const response = await axios.post('http://192.168.1.215:5000/api/contenidos', formDataToSend, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      setContenidos((prev) => [...prev, response.data]);
-      cerrarModal();
-    } catch (err) {
-      console.error('Error al agregar contenido:', err);
-    }
-  };
-
   // EDITAR contenido
   const editarContenido = async (e) => {
     e.preventDefault();
@@ -90,6 +50,7 @@ const Content = () => {
     }
 
     const formDataToSend = new FormData();
+    formDataToSend.append('id', id);
     formDataToSend.append('titulo', titulo);
     formDataToSend.append('descripcion', descripcion);
     formDataToSend.append('clase', clase);
@@ -97,6 +58,8 @@ const Content = () => {
     if (archivo) formDataToSend.append('archivo', archivo);
 
     try {
+      console.log('ID que se está enviando:', id);    
+
       const response = await axios.put(`http://192.168.1.215:5000/api/contenidos/${id}`, formDataToSend, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
@@ -104,6 +67,7 @@ const Content = () => {
         prev.map((item) => (item.id === id ? response.data : item))
       );
       cerrarModal();
+      obtenerContenidos(); // Para actualizar la lista
     } catch (err) {
       console.error('Error al editar contenido:', err);
     }
@@ -118,22 +82,15 @@ const Content = () => {
     }
   };
 
-  // Abrir modal para agregar
-  const handleAdd = () => {
-    setModoFormulario('agregar');
-    setFormData({ id: '', titulo: '', descripcion: '', clase: '', fecha: '', archivo: null });
-    setIsModalOpen(true);
-  };
-
   // Abrir modal para editar
   const handleEdit = (contenido) => {
-    setModoFormulario('editar');
+    console.log('Contenido a editar:', contenido);
     setFormData({
       id: contenido.id,
       titulo: contenido.titulo,
       descripcion: contenido.descripcion,
       clase: contenido.clase,
-      fecha: contenido.fecha || '',
+      fecha: contenido.fecha ? contenido.fecha.split('T')[0] : '', // Cortar la fecha
       archivo: null,
     });
     setIsModalOpen(true);
@@ -150,15 +107,14 @@ const Content = () => {
       <Navbar />
       <div className="container mt-4">
         <h2>Lista de contenidos</h2>
-        <button className="add-button" onClick={handleAdd}>Agregar Contenido</button>
 
         {isModalOpen && (
           <div className="modal-overlay">
-            <div className="modal-content">
+            <div className="modal-content1">
               <span className="close" onClick={cerrarModal}>&times;</span>
-              <h2>{modoFormulario === 'agregar' ? 'Agregar Contenido' : 'Editar Contenido'}</h2>
-              <form onSubmit={modoFormulario === 'agregar' ? agregarContenido : editarContenido}>
-                
+              <h2>Editar Contenido</h2>
+              <form onSubmit={editarContenido}>
+
                 <div className="form-group">
                   <label>Título:</label>
                   <input type="text" name="titulo" value={formData.titulo} onChange={handleInputChange} required />
@@ -189,7 +145,7 @@ const Content = () => {
                 </div>
 
                 <div className="form-buttons">
-                  <button type="submit">{modoFormulario === 'agregar' ? 'Agregar' : 'Guardar Cambios'}</button>
+                  <button type="submit">Guardar Cambios</button>
                   <button type="button" onClick={cerrarModal}>Cancelar</button>
                 </div>
               </form>

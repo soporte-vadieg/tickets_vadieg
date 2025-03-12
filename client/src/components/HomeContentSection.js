@@ -7,17 +7,6 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination } from 'swiper/modules';
 import '../styles/HomeContent.css';
 
-const swiperWrapper = document.querySelector('.swiper-wrapper');
-const slides = document.querySelectorAll('.swiper-slide');
-
-if (slides.length < 5) { // Si hay pocos slides, duplicarlos
-  slides.forEach(slide => {
-    let clone = slide.cloneNode(true);
-    swiperWrapper.appendChild(clone);
-  });
-}
-
-
 const ContentSection = () => {
     const [contenidos, setContenidos] = useState([]);
 
@@ -46,16 +35,16 @@ const ContentSection = () => {
                 <Swiper
                     modules={[Navigation, Pagination]}
                     spaceBetween={20}
-                    slidesPerView={1}
+                    slidesPerView={3} // Muestra tres contenidos a la vez
                     breakpoints={{
-                        640: { slidesPerView: 1 },
-                        768: { slidesPerView: 2 },
-                        1024: { slidesPerView: 3 },
+                        640: { slidesPerView: 1 }, // En pantallas pequeñas, 1 contenido
+                        768: { slidesPerView: 2 }, // En pantallas medianas, 2 contenidos
+                        1024: { slidesPerView: 3 }, // En pantallas grandes, 3 contenidos
                     }}
                     navigation
                     pagination={{ clickable: true }}
-                    loop={true}
-                    grabCursor={true}
+                    loop={true} 
+                    grabCursor={true} 
                 >
                     {novedades.map((contenido) => (
                         <SwiperSlide key={contenido.id}>
@@ -71,7 +60,7 @@ const ContentSection = () => {
                                         <img
                                             src={`http://192.168.1.215:5000/uploads/${contenido.archivo}`}
                                             alt={contenido.archivo.originalname}
-                                            style={{ maxWidth: '150px', height: 'auto' }}
+                                            style={{ maxWidth: '100px', height: 'auto' }}
                                         />
                                     </div>
                                 )}
@@ -89,16 +78,16 @@ const ContentSection = () => {
                 <Swiper
                     modules={[Navigation, Pagination]}
                     spaceBetween={20}
-                    slidesPerView={1}
+                    slidesPerView={3} // Muestra tres contenidos a la vez
                     breakpoints={{
-                        640: { slidesPerView: 1 },
-                        768: { slidesPerView: 2 },
-                        1024: { slidesPerView: 3 },
+                        640: { slidesPerView: 1 }, // En pantallas pequeñas, 1 contenido
+                        768: { slidesPerView: 2 }, // En pantallas medianas, 2 contenidos
+                        1024: { slidesPerView: 3 }, // En pantallas grandes, 3 contenidos
                     }}
                     navigation
                     pagination={{ clickable: true }}
-                    loop={true}
-                    grabCursor={true}
+                    loop={true}  
+                    grabCursor={true} 
                 >
                     {documentacion.map((contenido) => (
                         <SwiperSlide key={contenido.id}>
@@ -108,17 +97,16 @@ const ContentSection = () => {
                                 <p className="content-date">
                                     <strong>Fecha:</strong> {new Date(contenido.fecha).toLocaleDateString()}
                                 </p>
-                 
                                 {/* Mostrar enlace de descarga si existe archivo */}
                                 {contenido.archivo && (
-                                <div className="content-file">
-                                    <a
-                                    href={`http://192.168.1.215:5000/uploads/${contenido.archivo}`}
-                                    download={contenido.archivo} // Esto fuerza la descarga del archivo
-                                    >
-                                    Descargar Documento
-                                    </a>
-                                </div>
+                                    <div className="content-file">
+                                        <a
+                                            href={`http://192.168.1.215:5000/uploads/${contenido.archivo}`}
+                                            download={contenido.archivo} // Esto fuerza la descarga del archivo
+                                        >
+                                            Descargar Documento
+                                        </a>
+                                    </div>
                                 )}
                             </div>
                         </SwiperSlide>

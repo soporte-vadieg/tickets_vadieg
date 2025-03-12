@@ -2,17 +2,18 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     background-image: url('../assets/imagen_fondo.jpg');
     background-size: cover; /* La imagen cubrirá todo el contenedor */
 }
-
+.contenedor-derecho{
+    height: 80%;
+}
 .contenido {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%; /* Asegura que el contenido ocupe el 100% del ancho */
-    max-width: 1200px; /* Define un ancho máximo para el contenido */
+    max-width: 1080px; /* Define un ancho máximo para el contenido */
     margin-top: 20px;
 }
 
@@ -25,7 +26,7 @@
 }
 
 .calendario-container {
-    width: 300px; /* Ancho fijo para el calendario */
+    width: auto; /* Ancho fijo para el calendario */
     height: auto;
     padding: 10px;
     border: 1px solid #ddd;
@@ -50,7 +51,7 @@
 }
 
 .seccion-grupo {
-    width: 100%; /* Asegura que la sección de contenido ocupe el 100% del ancho disponible */
+    width: 1080px; /* Asegura que la sección de contenido ocupe el 100% del ancho disponible */
     text-align: center;
     display: flex;
     justify-content: center; /* Centra el contenido */
@@ -59,7 +60,6 @@
 }
 
 .buscador-container {
-    width: 450px; /* Ancho fijo para el buscador */
     height: 350px;/* alto fijo para el buscador */
     padding: 10px;
     border: 1px solid #ddd;

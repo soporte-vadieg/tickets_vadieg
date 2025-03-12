@@ -32,10 +32,37 @@ app.use(express.json());
 app.use('/api/', userRoutes);
 app.use('/api/', ticketRoutes);
 app.use('/api/', conteRoutes);
-
 app.use('/api/',areaRutes);
 app.use('/api/',cateRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+app.put('/api/contenidos/:id', (req, res) => {
+  const id = parseInt(req.params.id, 10); // ID correcto
+  const { titulo, descripcion,fecha,clase } = req.body;
+
+  // Asegúrate de que los campos sean válidos
+  if (!titulo || !descripcion || ! fecha|| !clase) {
+    return res.status(400).send('Todos los campos son requeridos');
+  }
+
+  db.query('SELECT * FROM contenidos WHERE id = ?', [id], (err, results) => {
+    if (err) return res.status(500).send('Error al buscar el contenido');
+    if (results.length === 0) {
+      return res.status(404).send('Contenido no encontrado');
+    }
+
+    // Si el contenido existe, continuar con la actualización
+    const query = 'UPDATE contenidos SET titulo = ?, descripcion = ?, fecha = ?, clase = ? WHERE id = ?';
+    db.query(query, [titulo, descripcion, fecha,clase, id], (err, results) => {
+      if (err) return res.status(500).send('Error al actualizar el contenido');
+      res.status(200).send('Contenido actualizado');
+    });
+  });
+});
+
+
+
+
 //app.use('/api/');
 /*
 //Funciones de contenidos
