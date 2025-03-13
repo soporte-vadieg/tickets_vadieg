@@ -59,8 +59,10 @@
     padding: 0; /* Elimina cualquier padding adicional */
 }
 
+/* Contenedor de contactos adaptado al estilo general */
 .buscador-container {
-    height: 350px;/* alto fijo para el buscador */
+    height: auto; /* Ajustado a la necesidad de expandirse */
+    min-height: 80px; /* Altura mínima para mantener diseño */
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 10px;
@@ -71,8 +73,11 @@
     margin-left: 10px;
     margin-right: 10px;
     margin-block-end: 10px;
+    overflow: hidden; /* Ocultar contenido cuando esté colapsado */
+    transition: max-height 0.3s ease-in-out, padding 0.3s ease-in-out;
 }
 
+/* Input del buscador */
 .buscador-container input {
     padding: 10px;
     width: 100%;
@@ -82,14 +87,48 @@
     border: 1px solid #ddd;
 }
 
+/* Contenedor que envuelve la lista, controla expansión */
+.contactos-lista {
+    max-height: 0; /* Por defecto colapsado */
+    overflow: hidden; /* Esconde contactos si no se expande */
+    width: 100%; /* Que ocupe todo el ancho del buscador */
+    transition: max-height 0.3s ease-in-out;
+}
+
+/* Se expande cuando se realiza una búsqueda */
+.contactos-lista.expandido {
+    max-height: 300px; /* Ajusta este valor según cuántos contactos muestres */
+    overflow-y: auto; /* Scroll si excede la altura */
+    padding: 10px 0; /* Espacio interno cuando se expanda */
+}
+
+/* Lista sin puntos */
 .buscador-container ul {
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    width: 100%;
 }
 
+/* Cada contacto */
 .buscador-container li {
     margin: 5px 0;
+    padding: 8px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: calc(100% - 20px); /* Ajusta dentro del padding */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
 }
+
+/* Hover para cada contacto */
+.buscador-container li:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
 /* Estilos para la sección de indicadores */
 .indicadores-container {
     text-align: center;

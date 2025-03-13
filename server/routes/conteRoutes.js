@@ -25,7 +25,7 @@ router.post('/contenido-create', upload.single('file'), addContenido);
 //router.put('/:id', editContenido);
 
 //Eliminar contenido
-router.delete('/:id', deleteContenido);
+router.delete('/contenidos/:id', deleteContenido);
 
 router.get('/contenidos', async (req, res) => {
     try {
