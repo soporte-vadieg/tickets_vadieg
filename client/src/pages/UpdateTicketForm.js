@@ -66,10 +66,10 @@ const UpdateTicketForm = ({ ticket, onClose }) => {
                             value={status} 
                             onChange={(e) => setStatus(e.target.value)} 
                         >
-                            <option value="">Seleccionar...</option>
-                            <option value="abierto">Abierto</option>
-                            <option value="en_progreso">En progreso</option>
-                            <option value="cerrado">Cerrado</option>
+                            <option value="pendiente">pendiente</option>
+                            <option value="asignado">asignado</option>
+                            <option value="en_progreso">En Progreso</option>
+                            <option value="cerrado">Cerrados</option>
                         </select>
                     </div>
 

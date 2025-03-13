@@ -44,19 +44,13 @@ const TicketDetailsPage = () => {
             <div>
                 <label>Estado:</label>
                 <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                    <option value="abierto">Abierto</option>
-                    <option value="en_progreso">En Progreso</option>
-                    <option value="cerrado">Cerrado</option>
+                            <option value="pendiente">pendiente</option>
+                            <option value="asignado">asignado</option>
+                            <option value="en_progreso">En Progreso</option>
+                            <option value="cerrado">Cerrados</option>
                 </select>
             </div>
-            <div>
-                <label>Urgencia:</label>
-                <select value={urgency} onChange={(e) => setUrgency(e.target.value)}>
-                    <option value="Baja">Baja</option>
-                    <option value="Media">Media</option>
-                    <option value="Alta">Alta</option>
-                </select>
-            </div>
+
             <button onClick={handleUpdate}>Actualizar Ticket</button>
         </div>
     );

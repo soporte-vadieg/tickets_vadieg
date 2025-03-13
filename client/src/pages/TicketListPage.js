@@ -78,13 +78,14 @@ const TicketListPage = () => {
             <div className="container mt-4" >
                 <h2>Lista de Tickets</h2>
 
-                {/* Filtros en una fila sdasdasasd */}
+                {/* Filtros en una fila  */}
                 <div className="d-flex flex-wrap gap-3 align-items-center mb-3 justify-content-around" >
                     <div>
                         <label className="page-title">Estado:</label>
                         <select className="form-select" onChange={(e) => setFilterStatus(e.target.value)} value={filterStatus}>
                             <option value="all">Todos</option>
-                            <option value="abierto">Sin atender</option>
+                            <option value="pendiente">pendiente</option>
+                            <option value="asignado">asignado</option>
                             <option value="en_progreso">En Progreso</option>
                             <option value="cerrado">Cerrados</option>
                         </select>
@@ -106,8 +107,10 @@ const TicketListPage = () => {
                     {Object.keys(groupedTickets).map(status => (
                         <div key={status} className="mb-4">
                             <h3 className="page-title">
-                                {status === 'abierto' ? 'Sin atender' : 
-                                 status === 'en_progreso' ? 'En Progreso' : 'Cerrados'} ({groupedTickets[status].length})
+                                {status === 'pendiente' ? 'Sin atender' :
+                                 status === 'asignado' ? 'Asignado' : 
+                                 status === 'en_progreso' ? 'En Progreso' : 
+                                 status === 'Cerrados'} ({groupedTickets[status].length})
                             </h3>                      
                             <div>
                                 {groupedTickets[status].map(ticket => (

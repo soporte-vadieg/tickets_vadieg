@@ -130,58 +130,51 @@ const createTicket = async (req, res) => {
 // Actualizar un ticket existente
 const updateTicket = async (req, res) => {
     const { id } = req.params;
-    const { status, assigned_to ,title} = req.body;   
+    const { status, assigned_to } = req.body;
 
-
-    // Validaciones
     if (!status && !assigned_to) {
         return res.status(400).json({ message: 'Debe proporcionar al menos status o assigned_to para actualizar.' });
     }
 
-    // Si se está asignando un ticket, validar el usuario y enviar correo
+    // Si el estado es "Cerrado", no permitir actualizar assigned_to
+    if (status === "Cerrado" && assigned_to) {
+        return res.status(400).json({ message: 'No se puede asignar un usuario a un ticket cerrado.' });
+    }
+
+    let userEmail = null;
+
     if (assigned_to) {
-        const userEmail = await getUserEmail(assigned_to);
-        if (!userEmail) {
-            return res.status(404).json({ message: 'Usuario asignado no encontrado.' });
-        }
-
-        const subject = `Nuevo Ticket Asignado: ${id}`;
-        const text = `
-            Se te ha asignado un nuevo ticket con los siguientes detalles:
-
-            ID del Ticket: ${id}            
-            Estado: ${status || 'Sin cambios'}
-            Fecha de asignación: ${new Date().toLocaleDateString()}
-
-            Gracias,
-            Equipo de Sistemas VADIEG
-        `;
-
         try {
-            await sendEmail(userEmail, subject, text);
-            console.log('Correo enviado al usuario asignado.');
+            userEmail = await getUserEmail(assigned_to);
+            if (!userEmail) {
+                return res.status(404).json({ message: 'Usuario asignado no encontrado.' });
+            }
         } catch (error) {
-            console.error('Error al enviar el correo al usuario asignado:', error);
-            return res.status(500).json({ message: 'Error al enviar correo al usuario asignado.' });
+            console.error('Error al obtener el correo del usuario:', error);
+            return res.status(500).json({ message: 'Error al obtener el correo del usuario.' });
         }
     }
 
     // Construir la consulta dinámicamente
-    let query = 'UPDATE tickets SET ';
-    const queryParams = [];
-    
+    let fieldsToUpdate = [];
+    let queryParams = [];
+
     if (status) {
-        query += 'status = ?, ';
+        fieldsToUpdate.push('status = ?');
         queryParams.push(status);
     }
-    
+
     if (assigned_to) {
-        query += 'assigned_to = ?, ';
+        fieldsToUpdate.push('assigned_to = ?');
         queryParams.push(assigned_to);
     }
 
-    // Eliminar la última coma y agregar la cláusula WHERE
-    query = query.slice(0, -2) + ' WHERE id = ?';
+    if (fieldsToUpdate.length === 0) {
+        return res.status(400).json({ message: 'No hay campos válidos para actualizar.' });
+    }
+
+    // Construir la consulta final
+    const query = `UPDATE tickets SET ${fieldsToUpdate.join(', ')} WHERE id = ?`;
     queryParams.push(id);
 
     try {
@@ -191,12 +184,36 @@ const updateTicket = async (req, res) => {
             return res.status(404).json({ message: 'Ticket no encontrado.' });
         }
 
+        // Enviar correo solo si se asignó un usuario
+        if (userEmail) {
+            const subject = `Nuevo Ticket Asignado: ${id}`;
+            const text = `
+                Se te ha asignado un nuevo ticket con los siguientes detalles:
+
+                ID del Ticket: ${id}
+                Estado: ${status || 'Sin cambios'}
+                Fecha de asignación: ${new Date().toLocaleDateString()}
+
+                Gracias,
+                Equipo de Sistemas VADIEG
+            `;
+
+            try {
+                await sendEmail(userEmail, subject, text);
+                console.log('Correo enviado al usuario asignado.');
+            } catch (error) {
+                console.error('Error al enviar el correo al usuario asignado:', error);
+                return res.status(500).json({ message: 'Error al enviar correo al usuario asignado.' });
+            }
+        }
+
         res.json({ message: 'Ticket actualizado con éxito.' });
     } catch (err) {
         console.error('Error al actualizar ticket:', err);
         return res.status(500).json({ message: 'Error al actualizar ticket', error: err.message });
     }
 };
+
 // Obtener todas las áreas
 const getAreas = async (req, res) => {
     try {
