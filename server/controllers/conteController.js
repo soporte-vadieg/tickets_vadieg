@@ -91,7 +91,7 @@ const editContenido = (req, res) => {
 };
 // 📌 Eliminar un contenido
 const deleteContenido = (req, res) => {
-    /*const { id } = req.params.id;
+    const { id } = req.params.id;
 
     db.query('SELECT archivo FROM contenidos WHERE id = ?', [id], (err, results) => {
         if (err) return res.status(500).json({ message: 'Error en el servidor' });
@@ -113,7 +113,7 @@ const deleteContenido = (req, res) => {
 
             res.json({ message: 'Contenido eliminado correctamente' });
         });
-    });*/
+    })
 };
 const getContenidoById = async (req, res) => {
     const id = req.params.id;

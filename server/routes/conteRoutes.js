@@ -1,5 +1,5 @@
 const express = require('express');
-const { getContenidos,editContenido,addContenido} = require('../controllers/conteController');
+const { getContenidos,editContenido,addContenido,deleteContenido} = require('../controllers/conteController');
 const { verifyToken } = require('../middleware/authMiddleware');
 const router = express.Router();
 const multer = require('multer');
@@ -23,6 +23,9 @@ router.get('/contenidoNew', verifyToken, getContenidos);
 router.post('/contenido-create', upload.single('file'), addContenido);
 // Actualizar un ticket existente (protegido)
 //router.put('/:id', editContenido);
+
+//Eliminar contenido
+router.delete('/:id', deleteContenido);
 
 router.get('/contenidos', async (req, res) => {
     try {
