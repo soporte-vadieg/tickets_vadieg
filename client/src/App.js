@@ -13,6 +13,7 @@ import CateListPage from './pages/CateListPage';
 import Home from './pages/HomePage.js';
 import Contenido from './pages/ContenidoPage.js';
 import CreateContenido from './pages/CreateContenido.js';
+import ManualesPage from './pages/ManualesPage.js';
 
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                     <Route path="/user-list" element={<UserListPage />} />
                     <Route path="/area-list" element={<AreasListPage />} />
                     <Route path="/categoria-list" element={<CateListPage />} />
+                    <Route path="/manuales" element={<ManualesPage />} />
                 </Routes>
             </Router>
         </AuthProvider>

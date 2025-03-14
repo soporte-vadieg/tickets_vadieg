@@ -8,6 +8,7 @@ const areaRutes = require('./routes/areaRutes');
 const cateRoutes = require('./routes/cateRoutes');
 const conteRoutes = require('./routes/conteRoutes');
 const contactosRoutes = require('./routes/contactosRoutes');
+const manualesRoutes = require('./routes/manualesRoutes.js');
 
 dotenv.config();
 const app = express();
@@ -37,6 +38,8 @@ app.use('/api/', conteRoutes);
 app.use('/api/',areaRutes);
 app.use('/api/',cateRoutes);
 app.use('/api/',contactosRoutes);
+app.use('/api/',manualesRoutes);
+
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 

@@ -107,8 +107,9 @@ const Home = () => {
                         <div className="indicadores-container">
                             <h3>Manuales y Procedimientos </h3>
                             <div id="ultimas-noticias">
-                            <h5>Últimas Noticias</h5>
-                        </div>
+                                    <h5>Últimas Noticias</h5>
+                                    <p>Aquí irían las últimas novedades y anuncios importantes...</p>
+                                </div>
                         </div>
                     </div>
 
