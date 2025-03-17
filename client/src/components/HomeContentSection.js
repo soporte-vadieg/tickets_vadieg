@@ -9,7 +9,8 @@ import '../styles/HomeContent.css';
 
 const ContentSection = () => {
     const [contenidos, setContenidos] = useState([]);
-
+    console.log(contenidos);
+    
     useEffect(() => {
         // Solicitar datos al backend
         axios.get('http://192.168.1.215:5000/api/contenidos')
@@ -58,8 +59,8 @@ const ContentSection = () => {
                                 {contenido.archivo && (
                                     <div className="content-image">
                                         <img
-                                            src={`http://192.168.1.215:5000/uploads/${contenido.archivo}`}
-                                            alt={contenido.archivo.originalname}
+                                            src={`http://192.168.1.215:5000/${contenido.archivo}`} // ya incluye 'uploads/...'
+                                            alt="Contenido"
                                             style={{ maxWidth: '100px', height: 'auto' }}
                                         />
                                     </div>

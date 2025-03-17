@@ -20,7 +20,7 @@ const upload = multer({ storage }); // Define el middleware "upload"
 // Obtener todos los tickets (protegido)
 router.get('/contenidoNew', verifyToken, getContenidos);
 // Crear un nuevo ticket (protegido)
-router.post('/contenido-create', upload.single('file'), addContenido);
+router.post('/contenido-create', upload.single('archivo'), addContenido);
 // Actualizar un ticket existente (protegido)
 //router.put('/:id', editContenido);
 

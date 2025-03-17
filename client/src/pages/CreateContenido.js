@@ -44,7 +44,7 @@ const CreateContenido = () => {
       formData.append('descripcion', contenido.descripcion);
       formData.append('clase', contenido.clase);
       formData.append('fecha', contenido.fecha);
-      console.log([...formData]); 
+      
       if (file) {
         const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
         if (!allowedTypes.includes(file.type)) {
@@ -54,7 +54,8 @@ const CreateContenido = () => {
         }
         formData.append('archivo', file);
       }
-
+      console.log([...formData]); 
+      
       const response = await createContenido(formData);
       alert(`Contenido creado con éxito: ${response.ContenidoId}`);
 

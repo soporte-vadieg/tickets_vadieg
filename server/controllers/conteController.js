@@ -12,53 +12,37 @@ const getContenidos = async (req, res) => {
         return res.status(500).json({ message: 'Error al obtener las categorías.' });
     }
 };
-const addContenido = async(req, res) => {
-    const id = req.params.id;
+const addContenido = async (req, res) => {
     const { titulo, descripcion, clase, fecha } = req.body;
-    const file = req.file;
+    const archivo = req.file; // ⚠️ Asegúrate de que sea req.file
     let filePath = null;
-    if (file) {
-        filePath = file.path.replace(/\\/g, '/');
+    if (archivo) {
+        filePath = archivo.path.replace(/\\/g, '/');
     }
 
     if (!titulo || !descripcion || !clase || !fecha) {
         return res.status(400).json({ message: 'Todos los campos son requeridos' });
     }
 
-    const query = 'INSERT INTO contenidos (titulo, descripcion,fecha, clase) VALUES (?, ?, ?, ?)';
+    const query = 'INSERT INTO contenidos (titulo, descripcion, fecha, clase, archivo) VALUES (?, ?, ?, ?, ?)';
   
     try {
-
-        // Ejecuta la consulta usando el pool de promesas
-        const [result] = await db.execute(query, [titulo, descripcion,fecha,clase]);
+        // Ejecuta la consulta con los 5 valores
+        const [result] = await db.execute(query, [titulo, descripcion, fecha, clase, filePath]);
         console.log('Resultado de la inserción:', result);
 
-        const ContenidoId = result.insertId; // Obtiene el ID del contenido creado
+        const ContenidoId = result.insertId;
         if (!ContenidoId) {
             return res.status(500).json({ message: 'No se pudo crear el contenido.' });
         }
-   
 
-        res.status(201).json({ message: 'contenido creado con éxito.', ContenidoId });
+        res.status(201).json({ message: 'Contenido creado con éxito.', ContenidoId, archivo: filePath });
     } catch (error) {
         console.error('Error al crear el contenido:', error);
         res.status(500).json({ message: 'Error al crear el contenido', error: error.message });
     }
-
-
-
-
-/*    db.query(query, values, (err, result) => {
-        if (err) {
-            console.error('Error al actualizar contenido:', err);
-            return res.status(500).json({ message: 'Error al actualizar contenido', error: err });
-        }
-        if (result.affectedRows === 0) {
-            return res.status(404).json({ message: 'Contenido no encontrado' });
-        }
-        res.json({ message: 'Contenido actualizado correctamente' });
-    });*/
 };
+
 // 📌 Editar un contenido
 const editContenido = (req, res) => {
    /* const { id } = req.params;

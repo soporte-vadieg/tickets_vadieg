@@ -10,10 +10,10 @@ const Manual = () => {
   const [manuales, setManuales] = useState([]);
   const [titulo, setTitulo] = useState('');
   const [descripcion, setDescripcion] = useState('');
-  const [urlDocumento, setUrlDocumento] = useState('');
   const [showModal, setShowModal] = useState(false); // Control del modal
-  const userId = (localStorage.getItem('user')); // Lo convierte a número
-
+  const userData = JSON.parse(localStorage.getItem('user'));
+  const [file, setFile] = useState(null);
+  
 
   // Obtener manuales al cargar
   useEffect(() => {
@@ -24,7 +24,6 @@ const Manual = () => {
     try {
       const response = await axios.get('http://192.168.1.215:5000/api/manuales');
       setManuales(response.data);
-     console.log(userId);
     } catch (err) {
       console.error('Error al obtener contenidos:', err);
     }
@@ -33,38 +32,43 @@ const Manual = () => {
   // Crear manual
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const nuevoManual = {
-      titulo,
-      descripcion,
-      url_documento: urlDocumento,
-      usuario_subio:localStorage.getItem('userId'),  // Si tienes el ID en el almacenamiento local
-      fecha_subida: new Date().toISOString().split('T')[0] // YYYY-MM-DD
-    };
-
+  
+    const formData = new FormData();
+    formData.append('titulo', titulo);
+    formData.append('descripcion', descripcion);
+    formData.append('usuario_subio', userData.full_name);
+    formData.append('fecha_subida', new Date().toISOString().split('T')[0]); 
+    if (file) {
+      formData.append('url_documento', file); 
+    }
+    
     try {
-      const response = await axios.post('http://192.168.1.215:5000/api/create-manuales', nuevoManual);
+      const response = await axios.post('http://192.168.1.215:5000/api/create-manuales', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
       console.log('Manual creado:', response.data);
-
-      // SweetAlert con ID del manual creado
+  
       Swal.fire({
         icon: 'success',
         title: 'Manual creado correctamente',
         text: `ID del manual: ${response.data.id}`,
         confirmButtonText: 'Aceptar'
       });
-
+  
       // Limpiar formulario
       setTitulo('');
       setDescripcion('');
-      setUrlDocumento('');
-
+      setFile(null);
+  
       // Cerrar modal
       setShowModal(false);
-
+  
       // Actualizar lista
       obtenerManuales();
-
+  
     } catch (err) {
       console.error('Error al crear manual:', err);
       Swal.fire({
@@ -74,6 +78,7 @@ const Manual = () => {
       });
     }
   };
+  
 
   return (
     <div className='manualList'>
@@ -89,22 +94,45 @@ const Manual = () => {
 
         {/* LISTA DE MANUALES */}
         <div className="container mt-4">
-          {manuales.length > 0 ? (
-            <ul>
-              {manuales.map((item) => (
-                <li key={item.id}>
-                  <h3><strong>Título:</strong> {item.titulo}</h3>
-                  <p><strong>Descripción:</strong> {item.descripcion}</p>
-                  <p><strong>URL:</strong> <a href={item.url_documento} target="_blank" rel="noopener noreferrer">{item.url_documento}</a></p>
-                  <p><strong>Fecha:</strong> {item.fecha_subida}</p>
-                  <p><strong>Usuario:</strong> {item.usuario_subio}</p>
-                  <hr />
-                </li>
-              ))}
-            </ul>
-          ) : <p>No hay contenidos disponibles.</p>}
-        </div>
-      </div>
+            {manuales.length > 0 ? (
+              <div className="row">
+                {manuales.map((item) => (
+                  <div key={item.id} className="col-md-4 mb-4">
+                    <div className="card h-100 shadow-sm">
+                      <div className="card-body d-flex flex-column">
+                        <h5 className="card-title text-primary">{item.titulo}</h5>
+                        <p className="card-text flex-grow-1">{item.descripcion}</p>
+                        <p className="card-text">
+                          <small className="text-muted">Subido por: {item.usuario_subio}</small><br />
+                          <small className="text-muted">Fecha: {item.fecha_subida}</small>
+                        </p>
+                      </div>
+                      <div className="card-footer bg-transparent border-top-0 d-flex justify-content-between">
+                      <a 
+                          href={`http://192.168.1.215:5000/${item.url_documento}`} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                        >
+                          Ver Documento
+                        </a>
+
+                        <a 
+                          href={`http://192.168.1.215:5000/api/manuales/${item.id}/download`} 
+                          className="btn btn-outline-success btn-sm"
+                        >
+                          Descargar
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center">No hay contenidos disponibles.</p>
+            )}
+          </div>
+
+     </div>
 
       {/* MODAL */}
       {showModal && (
@@ -141,11 +169,9 @@ const Manual = () => {
                   <div className="mb-3">
                     <label className="form-label">URL del Documento:</label>
                     <input
-                      type="url"
-                      className="form-control"
-                      value={urlDocumento}
-                      onChange={(e) => setUrlDocumento(e.target.value)}
-                      required
+                          type="file"
+                          onChange={(e) => setFile(e.target.files[0])}
+                          accept=".jpg,.png,.pdf"
                     />
                   </div>
 

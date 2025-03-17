@@ -1,10 +1,10 @@
-// controllers/manualesController.js
 const db = require('../config/db'); // Importamos la configuración de la base de datos
+const path = require('path');
+const {fs} = require('fs');
 
-// Función para obtener todos los manuales
+// Obtener todos los manuales
 const getManuales = async (req, res) => {
   try {
-    // Realizamos la consulta con promesas
     const [results] = await db.execute('SELECT * FROM manuales ORDER BY id DESC');
     res.status(200).json(results);
   } catch (err) {
@@ -13,23 +13,20 @@ const getManuales = async (req, res) => {
   }
 };
 
-// Función para crear un nuevo manual
+// Crear un nuevo manual
 const createManual = async (req, res) => {
   console.log('Datos recibidos:', req.body); // Verifica que los datos estén llegando correctamente
 
-  const { titulo, descripcion, url_documento, usuario_subio, fecha_subida } = req.body;
-  
+  const { titulo, descripcion, usuario_subio, fecha_subida } = req.body;
+  let filePath = req.file ? `/uploads/${req.file.filename}` : null; // ✅ Guardar ruta del archivo
+
   try {
-    // Ejecutamos la consulta de inserción
     const [result] = await db.execute(
       'INSERT INTO manuales (titulo, descripcion, url_documento, usuario_subio, fecha_subida) VALUES (?, ?, ?, ?, ?)', 
-      [titulo, descripcion, url_documento, usuario_subio, fecha_subida]
+      [titulo, descripcion, filePath, usuario_subio, fecha_subida]
     );
 
-    console.log('Resultado de la inserción:', result);
-
     if (result && result.insertId) {
-      // Si se creó el manual correctamente, devolvemos el ID y el mensaje
       res.status(201).json({ id: result.insertId, message: 'Manual creado correctamente' });
     } else {
       res.status(500).json({ message: 'No se pudo obtener el ID del manual creado' });
@@ -40,4 +37,29 @@ const createManual = async (req, res) => {
   }
 };
 
-module.exports = { getManuales, createManual };
+// Descargar un archivo
+const downloadManual = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [result] = await db.execute('SELECT url_documento FROM manuales WHERE id = ?', [id]);
+
+    if (result.length === 0) {
+      return res.status(404).json({ message: 'Archivo no encontrado' });
+    }
+
+    const filePath = path.join(__dirname, '..', result[0].url_documento); // Ruta completa
+
+    // Verificar si el archivo existe en el servidor
+    if (!fs.existsSync(filePath)) {
+      return res.status(404).json({ message: 'Archivo no encontrado en el servidor' });
+    }
+
+    res.download(filePath); // 🔥 Forzar descarga
+  } catch (err) {
+    console.error('Error al descargar el archivo:', err);
+    res.status(500).json({ message: 'Error al descargar el archivo' });
+  }
+};
+
+module.exports = { getManuales, createManual, downloadManual };
