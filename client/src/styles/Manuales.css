@@ -1,0 +1,10 @@
+/* Estilos del modal con diseño tipo tarjeta */
+.manualList{
+    position: relative;
+    width: 100%;;     /* 100% del ancho de la ventana */
+    height: 930px;         /* 100% de la altura de la ventana */
+    background-image: url('../assets/imagen_fondo.jpg');
+    background-position: top;   
+    flex-direction: column;
+    align-items: center;
+  }

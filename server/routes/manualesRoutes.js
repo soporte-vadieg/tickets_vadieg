@@ -1,9 +1,9 @@
 const express = require('express');
-const db = require('../config/db');
 const router = express.Router();
-const { getManuales } = require('../controllers/manualesController.js');
+const { getManuales ,createManual} = require('../controllers/manualesController.js');
 
 
 router.get('/manuales', getManuales);
+router.post('/create-manuales',createManual);
 
 module.exports = router;

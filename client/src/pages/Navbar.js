@@ -96,6 +96,9 @@ const Navbar = () => {
             {location.pathname !== "/categoria-list" && (
               <NavLink href="/categoria-list" onClick={(e) => handleNavigation(e, '/categoria-list')}>Categorías</NavLink>
             )}
+            {location.pathname !== "/manuales" && (
+              <NavLink href="/manuales" onClick={(e) => handleNavigation(e, '/manuales')}>Manuales</NavLink>
+            )}
           </>
         )}
 
