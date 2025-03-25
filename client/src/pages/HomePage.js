@@ -174,20 +174,20 @@ const Home = () => {
                             </div>
                         </div>
 
-                        {/* Manuales y novedades */}
-                        <div className="indicadores-container">
-                            <h3><Link to="/manuales" style={{ textDecoration: 'none', color: 'inherit' }}>Manuales y Procedimientos</Link></h3>
-                            <div id="ultimas-noticias">
-                                <h5>Últimas Noticias</h5>
-                                {cumpleañosHoy.length > 0 ? (
+                        {/* Manuales y novedades      {cumpleañosHoy.length > 0 ? (
                                     <ul>
                                         {cumpleañosHoy.map((contacto, index) => (
                                             <li key={index}>🎂 Hoy es el cumpleaños de {contacto.nombre}</li>
                                         ))}
                                     </ul>
-                                ) : (
+                                ) :*/}
+                        <div className="indicadores-container">
+                            <h3><Link to="/manuales" style={{ textDecoration: 'none', color: 'inherit' }}>Manuales y Procedimientos</Link></h3>
+                            <div id="ultimas-noticias">
+                                <h5>Últimas Noticias</h5>
+                            
                                     <p>No hay novedades para hoy.</p>
-                                )}
+                                
                             </div>
                         </div>
 
@@ -198,6 +198,26 @@ const Home = () => {
                                 <div className="indicador"><div className="indicador-circle" style={{ backgroundColor: '#4CAF50' }} /><p>Total: {progreso}%</p></div>
                                 <div className="indicador"><div className={`indicador-circle ${estado}`} /><p>Total cerrados: {estado}</p></div>
                                 <div className="indicador"><div className="indicador-circle" /><p>Tickets Pendientes: {tareasPendientes}</p></div>
+                            </div>
+                        </div>
+                        <div className="indicadores-container">
+                            <h3>Formulario Menu diario </h3>
+                            <div className="indicadores">
+                                <div className="indicador">
+                                    <div className="indicador-circle" style={{ backgroundColor: '#4CAF50' }} />
+                                    <p>Cualquier consulta preguntarle a Julieta Lopez </p>
+                                </div>  
+                                <div className="formulario-container">
+                                    <a 
+                                        href="https://forms.gle/mfARQy3crFuiigJf8" 
+                                        target="_blank" 
+                                        rel="noopener noreferrer" 
+                                        className="formulario-link"
+                                      
+                                    >
+                                        Completa el formulario
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
