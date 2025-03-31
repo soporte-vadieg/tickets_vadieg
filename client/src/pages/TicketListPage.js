@@ -106,20 +106,24 @@ const TicketListPage = () => {
                 <div>
                     {Object.keys(groupedTickets).map(status => (
                         <div key={status} className="mb-4">
-                            <h3 className="page-title">
-                                {status === 'pendiente' ? 'Sin atender' :
-                                 status === 'asignado' ? 'Asignado' : 
-                                 status === 'en_progreso' ? 'En Progreso' : 
-                                 status === 'Cerrados'} ({groupedTickets[status].length})
-                            </h3>                      
-                            <div>
-                                {groupedTickets[status].map(ticket => (
-                                    <TicketCard key={ticket.id} ticket={ticket} />
-                                ))}
-                            </div>
+                        <h3 className="page-title">
+                            {status === "pendiente" ? "Sin atender" :
+                            status === "asignado" ? "Asignado" :
+                            status === "en_progreso" ? "En Progreso" :
+                            "Cerrado"} ({groupedTickets[status].length})
+                        </h3>
+                        <div>
+                            {groupedTickets[status].length > 0 ? (
+                            groupedTickets[status].map(ticket => (
+                                <TicketCard key={ticket.id} ticket={ticket} />
+                            ))
+                            ) : (
+                            <p>No hay tickets en esta categoría</p>
+                            )}
+                        </div>
                         </div>
                     ))}
-                </div>
+        </div>
             </div>
             </PageContainer>
         </div>

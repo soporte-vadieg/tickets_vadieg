@@ -1,7 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
---
+--https://www.realvnc.com/es/connect/download/?lai_vid=zagqVqjWvC2b&lai_sr=0-4&lai_sl=l
 -- Servidor: 127.0.0.1
 -- Tiempo de generación: 07-02-2025 a las 13:29:05
 -- Versión del servidor: 10.4.32-MariaDB
