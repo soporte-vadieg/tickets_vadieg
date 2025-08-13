@@ -22,7 +22,7 @@ const Manual = () => {
 
   const obtenerManuales = async () => {
     try {
-      const response = await axios.get('http://192.168.1.215:5000/api/manuales');
+      const response = await axios.get('http://192.168.1.44:5000/api/manuales');
       setManuales(response.data);
     } catch (err) {
       console.error('Error al obtener contenidos:', err);
@@ -43,7 +43,7 @@ const Manual = () => {
     }
     
     try {
-      const response = await axios.post('http://192.168.1.215:5000/api/create-manuales', formData, {
+      const response = await axios.post('http://192.168.1.44:5000/api/create-manuales', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -109,7 +109,7 @@ const Manual = () => {
                       </div>
                       <div className="card-footer bg-transparent border-top-0 d-flex justify-content-between">
                       <a 
-                          href={`http://192.168.1.215:5000/${item.url_documento}`} 
+                          href={`http://192.168.1.44:5000/${item.url_documento}`} 
                           target="_blank" 
                           rel="noopener noreferrer"
                         >
@@ -117,7 +117,7 @@ const Manual = () => {
                         </a>
 
                         <a 
-                          href={`http://192.168.1.215:5000/api/manuales/${item.id}/download`} 
+                          href={`http://192.168.1.44:5000/api/manuales/${item.id}/download`} 
                           className="btn btn-outline-success btn-sm"
                         >
                           Descargar

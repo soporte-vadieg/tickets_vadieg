@@ -11,7 +11,7 @@ const UpdateTicketForm = ({ ticket, onClose }) => {
 
     // Obtener los usuarios disponibles para asignar al ticket
     useEffect(() => {
-        axios.get('http://192.168.1.215:5000/api/users') // Asumimos que tienes una ruta para obtener los usuarios
+        axios.get('http://192.168.1.44:5000/api/users') // Asumimos que tienes una ruta para obtener los usuarios
             .then(response => {
                 setUsers(response.data);
             })
@@ -38,7 +38,7 @@ const UpdateTicketForm = ({ ticket, onClose }) => {
         // Obtener el token de autenticación (suponiendo que está almacenado en localStorage o estado)
         const token = localStorage.getItem('authToken'); // O usa el estado si lo tienes
 
-        axios.put(`http://192.168.1.215:5000/api/${ ticket.id}`, updatedTicket, {
+        axios.put(`http://192.168.1.44:5000/api/${ ticket.id}`, updatedTicket, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }

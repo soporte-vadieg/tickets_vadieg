@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://192.168.1.215:5000/api/contenidos';
+const API_URL = 'http://192.168.1.44:5000/api/contenidos';
 
 
 const getAuthHeaders = () => {
@@ -34,7 +34,7 @@ export const createContenido = async (contenidoData) => {
             throw new Error('Los datos del ticket son inválidos');
         }
  
-        const response = await axios.post('http://192.168.1.215:5000/api/contenido-create', contenidoData, {
+        const response = await axios.post('http://192.168.1.44:5000/api/contenido-create', contenidoData, {
             headers: {
                 'Content-Type': 'multipart/form-data', // Asegúrate de usar este encabezado para archivos
          

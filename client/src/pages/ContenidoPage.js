@@ -15,7 +15,7 @@ const Content = () => {
 
   const obtenerContenidos = async () => {
     try {
-      const response = await axios.get('http://192.168.1.215:5000/api/contenidos');
+      const response = await axios.get('http://192.168.1.44:5000/api/contenidos');
       setContenidos(response.data);
     } catch (err) {
       console.error('Error al obtener contenidos:', err);
@@ -60,7 +60,7 @@ const Content = () => {
     try {
       console.log('ID que se está enviando:', id);    
 
-      const response = await axios.put(`http://192.168.1.215:5000/api/contenidos/${id}`, formDataToSend, {
+      const response = await axios.put(`http://192.168.1.44:5000/api/contenidos/${id}`, formDataToSend, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       setContenidos((prev) =>
@@ -76,7 +76,7 @@ const Content = () => {
   // Eliminar contenido
   const handleDelete = (id) => {
     if (window.confirm(`¿Estás seguro de que deseas eliminar este contenido ${id}?`)) {
-      axios.delete(`http://192.168.1.215:5000/api/contenidos/${id}`)
+      axios.delete(`http://192.168.1.44:5000/api/contenidos/${id}`)
         .then(() => obtenerContenidos())
         .catch((err) => console.error('Error al eliminar contenido:', err));
     }
@@ -161,7 +161,7 @@ const Content = () => {
               <p>{item.clase}</p>
               <p>{item.fecha}</p>
               {item.archivo && (
-                <a href={`http://192.168.1.215:5000/uploads/${item.archivo}`} target="_blank" rel="noopener noreferrer">Ver archivo</a>
+                <a href={`http://192.168.1.44:5000/uploads/${item.archivo}`} target="_blank" rel="noopener noreferrer">Ver archivo</a>
               )}
               <div>
                 <button onClick={() => handleEdit(item)}>Editar</button>
