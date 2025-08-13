@@ -13,7 +13,7 @@ const ContentSection = () => {
     
     useEffect(() => {
         // Solicitar datos al backend
-        axios.get('http://192.168.1.215:5000/api/contenidos')
+        axios.get('http://192.168.1.44:5000/api/contenidos')
             .then((response) => {
                 setContenidos(response.data); // Guardar datos obtenidos
             })
@@ -59,7 +59,7 @@ const ContentSection = () => {
                                 {contenido.archivo && (
                                     <div className="content-image">
                                         <img
-                                            src={`http://192.168.1.215:5000/${contenido.archivo}`} // ya incluye 'uploads/...'
+                                            src={`http://192.168.1.44:5000/${contenido.archivo}`} // ya incluye 'uploads/...'
                                             alt="Contenido"
                                             style={{ maxWidth: '100px', height: 'auto' }}
                                         />
@@ -102,7 +102,7 @@ const ContentSection = () => {
                                 {contenido.archivo && (
                                     <div className="content-file">
                                         <a
-                                            href={`http://192.168.1.215:5000/uploads/${contenido.archivo}`}
+                                            href={`http://192.168.1.44:5000/uploads/${contenido.archivo}`}
                                             download={contenido.archivo} // Esto fuerza la descarga del archivo
                                         >
                                             Descargar Documento

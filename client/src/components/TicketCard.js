@@ -76,7 +76,7 @@ const TicketTableBootstrap = ({ ticket }) => {
                   <>
                     {isViewable(ticket.file_path) && (
                       <a
-                        href={`http://192.168.1.215:5000/${ticket.file_path}`}
+                        href={`http://192.168.1.44:5000/${ticket.file_path}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="btn btn-sm btn-outline-success me-2"
@@ -85,7 +85,7 @@ const TicketTableBootstrap = ({ ticket }) => {
                       </a>
                     )}
                     <a
-                      href={`http://192.168.1.215:5000/${ticket.file_path}`}
+                      href={`http://192.168.1.44:5000/${ticket.file_path}`}
                       download
                       className="btn btn-sm btn-outline-secondary"
                     >

@@ -22,7 +22,7 @@ const Home = () => {
 
     // Obtener contactos
     useEffect(() => {
-        axios.get('http://192.168.1.215:5000/api/contactos')
+        axios.get('http://192.168.1.44:5000/api/contactos')
             .then(response => {
                 setContactos(response.data);
                 setLoading(false);

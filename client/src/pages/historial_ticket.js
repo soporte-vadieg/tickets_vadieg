@@ -5,7 +5,7 @@ const TicketHistory = ({ ticketId }) => {
     const [history, setHistory] = useState([]);
 
     useEffect(() => {
-        axios.get(`http://192.168.1.215:5000/api/tickets/${ticketId}/history`)
+        axios.get(`http://192.168.1.44:5000/api/tickets/${ticketId}/history`)
             .then(response => setHistory(response.data))
             .catch(error => console.error("Error al obtener historial:", error));
     }, [ticketId]);
